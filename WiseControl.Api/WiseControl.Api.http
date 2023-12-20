@@ -1,0 +1,6 @@
+@WiseControl.Api_HostAddress = http://localhost:5283
+
+GET {{WiseControl.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
