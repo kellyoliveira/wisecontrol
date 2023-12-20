@@ -2,6 +2,6 @@
 {
     public class TransactionDTO
     {
-
+        public int Id { get; set; }
     }
 }
