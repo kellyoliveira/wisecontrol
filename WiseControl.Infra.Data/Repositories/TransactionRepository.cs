@@ -4,8 +4,11 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 using WiseControl.Domain.Entities;
 using WiseControl.Domain.Interfaces;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using Transaction = WiseControl.Domain.Entities.Transaction;
 
 namespace WiseControl.Infra.Data.Repositories
 {
@@ -16,20 +19,27 @@ namespace WiseControl.Infra.Data.Repositories
             throw new NotImplementedException();
         }
 
-        Task<Transaction> ITransactionRepository.GetByIdAsync(int? id)
+        public async Task<Transaction> GetByIdAsync(int? id)
         {
-            throw new NotImplementedException();
+            var transaction = new Transaction() { Description = "Lançamento", Date = System.DateTime.Now, Id = 1, Value = 100 };
+
+            var result = await Task.FromResult(transaction);
+
+            return result;
+
         }
 
-        Task<IEnumerable<Transaction>> ITransactionRepository.GetTransactionsAsync()
+        public async Task<IEnumerable<Transaction>> GetTransactionsAsync()
         {
             List<Transaction> transactions = new List<Transaction>();
 
-            transactions.Add(new Transaction() { Description = "Lançamento", Type = Transaction.TransactionType.Income, Date = System.DateTime.Now, Id=1, Value=100});
+            transactions.Add(new Transaction() { Description = "Lançamento", Date = System.DateTime.Now, Id=1, Value=100});
 
+            //transactions.Add(new Transaction() { Description = "Lançamento", Type = Transaction.TransactionType.Income, Date = System.DateTime.Now, Id=1, Value=100});
 
+            var result = await Task.FromResult(transactions);
 
-            return Task.FromResult(transactions.AsEnumerable()); 
+            return result;
 
         }
 

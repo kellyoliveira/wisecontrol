@@ -13,7 +13,11 @@ namespace WiseControl.Application.Mappings
     {
         public DomainToDTOMappingProfile()
         {
-            CreateMap<Transaction, TransactionDTO>().ReverseMap();
+            //CreateMap<Transaction, TransactionDTO>().ReverseMap();
+
+            CreateMap<Transaction, TransactionDTO>();
+            CreateMap<TransactionDTO, Transaction>();
+
         }
     }
 }

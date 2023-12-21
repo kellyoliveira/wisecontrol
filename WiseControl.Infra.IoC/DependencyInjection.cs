@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Reflection;
 using WiseControl.Application.Mappings;
 using WiseControl.Application.Services;
 using WiseControl.Domain.Interfaces;
@@ -14,11 +16,20 @@ namespace WiseControl.Infra.IoC
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services)
         {
-            services.AddAutoMapper(typeof(DomainToDTOMappingProfile));
+
+            
+
+
 
             services.AddScoped<ITransactionRepository, TransactionRepository>();
             services.AddScoped<ITransactionService, TransactionService>();
-           
+
+            
+
+            services.AddAutoMapper(Assembly.GetAssembly(typeof(DomainToDTOMappingProfile))); 
+
+
+            //services.AddAutoMapper(typeof(DomainToDTOMappingProfile));
 
             return services;
 
