@@ -29,6 +29,8 @@ namespace WiseControl.Application.Services
 
             transactionsDTos.Add(new TransactionDTO() { Description = "Lançamento", Date = System.DateTime.Now, Id = 1, Value = 100 });
 
+            return transactionsDTos;
+
             var transactionsEntities = await _transactionRepository.GetTransactionsAsync();
 
 

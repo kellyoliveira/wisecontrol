@@ -17,7 +17,7 @@ export const routes: Routes = [
         loadChildren: () => import('./features/transactions/transactions.module').then(m => m.TransactionsPageModule)
     },
     {
-        path: 'transaction-detail',
+        path: 'transaction-detail/:id',
         data: {
           title: 'Detalhes da Transação',
         },

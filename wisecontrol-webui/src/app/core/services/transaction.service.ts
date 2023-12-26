@@ -21,7 +21,7 @@ export class TransactionService extends BaseService {
   }
 
   public getTransaction(transactionUId: string) {
-    const url = `${environment.SERVER_HOST}/api/transactions/getProfile/` + transactionUId;
+    const url = `${environment.SERVER_HOST}/api/transactions/` + transactionUId;
     return this.http.get<Transaction>(url).pipe();
   }
 

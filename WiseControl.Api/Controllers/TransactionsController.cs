@@ -6,14 +6,14 @@ using WiseControl.Domain.Interfaces;
 namespace WiseControl.Api.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
-    public class TransactionController : ControllerBase
+    [Route("api/[controller]")]
+    public class TransactionsController : ControllerBase
     {
         
-        private readonly ILogger<TransactionController> _logger;
+        private readonly ILogger<TransactionsController> _logger;
         private readonly ITransactionService _transactionService;
 
-        public TransactionController(ILogger<TransactionController> logger, ITransactionService transactionService)
+        public TransactionsController(ILogger<TransactionsController> logger, ITransactionService transactionService)
         {
             _logger = logger;
             _transactionService = transactionService;
@@ -33,12 +33,12 @@ namespace WiseControl.Api.Controllers
         [HttpGet("{id}", Name = "GetTransaction")]
         public async Task<ActionResult<TransactionDTO>> Get(int id)
         {
-            var produto = await _transactionService.GetById(id);
-            if (produto == null)
+            var transaction = await _transactionService.GetById(id);
+            if (transaction == null)
             {
                 return NotFound("Transaction not found");
             }
-            return Ok(produto);
+            return Ok(transaction);
         }
 
         [HttpPost]
