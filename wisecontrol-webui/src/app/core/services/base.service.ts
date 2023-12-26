@@ -1,9 +1,14 @@
+import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { HttpClient, HttpHeaders  } from '@angular/common/http';
 import { MessageService } from './message.service';
 
+
+@Injectable({
+  providedIn: 'root',
+})
 export abstract class BaseService {
 
     protected readonly httpOptions = {headers: {'Content-Type': 'application/json'}};
@@ -11,7 +16,6 @@ export abstract class BaseService {
     
     protected readonly httpOptionsNoCache = {headers: {'Content-Type': 'application/json', 'Cache-Control': 'no-cache', 
     Pragma: 'no-cache'}};
-
 
 
     constructor(

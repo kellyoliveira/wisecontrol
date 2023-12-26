@@ -47,7 +47,7 @@ export class TransactionDetailPage  {
     this.messageService.isLoadingData = true;
     
     this.hasResult = false;
-    this.success = false;
+    this.success = false;////////////////
 
     this.transactionService.getTransaction(transactionId).subscribe(t => {
 
