@@ -1,8 +1,8 @@
 ﻿namespace WiseControl.DTOs
 {
-    public class TransactionDTO
+    public class AccountDTO
     {
-        public int TransactionId { get; set; }
+        public int AccountId { get; set; }
 
 
         //public TransactionType Type { get; set; }

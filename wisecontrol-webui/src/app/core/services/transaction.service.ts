@@ -12,23 +12,32 @@ import { catchError, map, tap } from 'rxjs/operators';
 @Injectable({
     providedIn: 'root'
   })
-export class TransactionService  {
-
-  protected readonly httpOptions = {headers: {'Content-Type': 'application/json'}};
-
-    
-  protected readonly httpOptionsNoCache = {headers: {'Content-Type': 'application/json', 'Cache-Control': 'no-cache', 
-  Pragma: 'no-cache'}};
+export class TransactionService extends BaseService {
 
   constructor(
-    protected messageService: MessageService,
-    protected router: Router,
-    protected http: HttpClient) {
+    protected override http: HttpClient,
+    protected override messageService: MessageService,
+    protected override router: Router) {
+    super(messageService, router, http);
   }
 
   public getTransaction(transactionUId: string) {
     const url = `${environment.SERVER_HOST}/api/transactions/` + transactionUId;
     return this.http.get<Transaction>(url).pipe();
+  }
+
+  public getTransactions(out: (totalCount: number) => void) {
+    const url = `${environment.SERVER_HOST}/api/transactions/`;
+    
+
+    return this.getEntities<Transaction>(() => new Transaction(), url, out).pipe(
+      map(cs => {
+        cs.forEach(c => { 
+          
+        });
+        return cs;
+      })
+    );
   }
 
   public saveTransaction(transaction: Transaction): Observable<Transaction> {
@@ -37,6 +46,8 @@ export class TransactionService  {
     }
     return this.createTransaction(transaction);
   }
+
+  
 
   public deleteTransaction(transaction: Transaction) {
     let urlService : string = environment.SERVER_HOST + '/api/transactions/' + transaction.transactionUId;

@@ -30,7 +30,7 @@ app.UseCors(builder =>
 
 
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseAuthorization();
 

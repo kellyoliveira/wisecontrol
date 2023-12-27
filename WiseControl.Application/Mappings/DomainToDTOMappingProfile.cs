@@ -16,7 +16,7 @@ namespace WiseControl.Application.Mappings
             //CreateMap<Transaction, TransactionDTO>().ReverseMap();
 
             CreateMap<Transaction, TransactionDTO>();
-            CreateMap<TransactionDTO, Transaction>();
+            //CreateMap<TransactionDTO, Transaction>();
 
         }
     }

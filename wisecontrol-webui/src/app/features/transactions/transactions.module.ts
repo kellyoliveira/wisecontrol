@@ -5,11 +5,13 @@ import { TransactionsPageRoutingModule } from './transactions-routing.module';
 import { TransactionsPage } from './transactions.page';
 import { HttpClientModule } from '@angular/common/http';
 
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     HttpClientModule,
+   
     TransactionsPageRoutingModule
   ],
   declarations: [TransactionsPage]

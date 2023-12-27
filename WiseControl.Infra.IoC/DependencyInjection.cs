@@ -17,19 +17,18 @@ namespace WiseControl.Infra.IoC
         public static IServiceCollection AddInfrastructure(this IServiceCollection services)
         {
 
-            
 
-
+            services.AddScoped<IAccountRepository, AccountRepository>();
+            services.AddScoped<IAccountService, AccountService>();
 
             services.AddScoped<ITransactionRepository, TransactionRepository>();
             services.AddScoped<ITransactionService, TransactionService>();
 
             
+            //services.AddAutoMapper(() => xAppDomain.CurrentDomain.GetAssemblies());
 
-            services.AddAutoMapper(Assembly.GetAssembly(typeof(DomainToDTOMappingProfile))); 
 
-
-            //services.AddAutoMapper(typeof(DomainToDTOMappingProfile));
+            services.AddAutoMapper(typeof(DomainToDTOMappingProfile));
 
             return services;
 

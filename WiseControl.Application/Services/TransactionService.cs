@@ -27,14 +27,17 @@ namespace WiseControl.Application.Services
 
             List<TransactionDTO> transactionsDTos = new List<TransactionDTO>();
 
-            transactionsDTos.Add(new TransactionDTO() { Description = "Lançamento", Date = System.DateTime.Now, Id = 1, Value = 100 });
+            //transactionsDTos.Add(new TransactionDTO() { Description = "Lançamento", Date = System.DateTime.Now, Id = 1, Value = 100 });
+
+            transactionsDTos.Add(new TransactionDTO() { Description = "Lançamento", TransactionId = 1});
+
 
             return transactionsDTos;
 
-            var transactionsEntities = await _transactionRepository.GetTransactionsAsync();
+            //var transactionsEntities = await _transactionRepository.GetTransactionsAsync();
 
 
-            return _mapper.Map<IEnumerable<TransactionDTO>>(transactionsEntities);
+            //return _mapper.Map<IEnumerable<TransactionDTO>>(transactionsEntities);
 
         }
 
@@ -42,9 +45,12 @@ namespace WiseControl.Application.Services
         {
             //var transactionEntity = await _transactionRepository.GetByIdAsync(id);
 
-            //_mapper.Map<TransactionDTO>(transactionEntity);
+            //return _mapper.Map<TransactionDTO>(transactionEntity);
 
-            var transactionEntity = new TransactionDTO() { Description = "Lançamento", Date = System.DateTime.Now, Id = 1, Value = 100 };
+            //var transactionEntity = new TransactionDTO() { Description = "Lançamento", Date = System.DateTime.Now, Id = 1, Value = 100 };
+
+
+            var transactionEntity = new TransactionDTO() { Description = "Lançamento", TransactionId = 1 };
 
             return transactionEntity;
         }

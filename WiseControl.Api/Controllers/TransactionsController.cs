@@ -50,13 +50,13 @@ namespace WiseControl.Api.Controllers
             await _transactionService.Add(transactionDTO);
 
             return new CreatedAtRouteResult("GetTransaction",
-                new { id = transactionDTO.Id }, transactionDTO);
+                new { id = transactionDTO.TransactionId }, transactionDTO);
         }
 
         [HttpPut("{id}")]
         public async Task<ActionResult> Put(int id, [FromBody] TransactionDTO transactionDTO)
         {
-            if (id != transactionDTO.Id)
+            if (id != transactionDTO.TransactionId)
             {
                 return BadRequest("Data invalid");
             }

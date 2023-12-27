@@ -24,6 +24,39 @@ export abstract class BaseService {
       protected http: HttpClient) {
     }
 
+    /**
+     * Gets a list of entities T from a REST service and its total count returned at the http.
+     * @param url the REST service url
+     * @param out the total count of records returned at the x-total-count header
+     */
+    protected getEntities<T> (constructor: () => T, url: string, out: (totalCount: number) => void): Observable<T[]> {
+      this.messageService.isLoadingData = true;
+      return this.http.get<T[]>(url, { observe: 'response'})
+      .pipe(
+        tap(() => { this.messageService.isLoadingData = false; }),
+        map(res => {
+          const entities = res.body!;
+          for (let i = 0; i < entities.length; i++) {
+            entities[i] = Object.assign(constructor.call, entities[i]);
+          }
+
+          if (out) {
+            out(-1);
+            const totalCountHeader = res.headers.get('x-total-count');
+            if (totalCountHeader) {
+              const totalCount = Number(totalCountHeader);
+              if (!isNaN(totalCount)) {
+                out(totalCount);
+              }
+            }
+          }
+          return entities;
+       }),
+       catchError(this.handleErrorAndContinue('getting records', []))
+     );
+   }
+
+
   /**
    * Handle Http operation that failed.
    * Let the app continue.

@@ -14,14 +14,21 @@ namespace WiseControl.Infra.Data.Repositories
 {
     public class TransactionRepository : ITransactionRepository
     {
-        Task<Transaction> ITransactionRepository.CreateAsync(Transaction product)
+     
+       
+        
+        
+        Task<Transaction> ITransactionRepository.CreateAsync(Transaction transaction)
         {
             throw new NotImplementedException();
         }
 
         public async Task<Transaction> GetByIdAsync(int? id)
         {
-            var transaction = new Transaction() { Description = "Lançamento", Date = System.DateTime.Now, Id = 1, Value = 100 };
+            //var transaction = new Transaction() { Description = "Lançamento", Date = System.DateTime.Now, Id = 1, Value = 100 };
+
+
+            var transaction = new Transaction() { Description = "Lançamento", TransactionId = 1};
 
             var result = await Task.FromResult(transaction);
 
@@ -33,7 +40,7 @@ namespace WiseControl.Infra.Data.Repositories
         {
             List<Transaction> transactions = new List<Transaction>();
 
-            transactions.Add(new Transaction() { Description = "Lançamento", Date = System.DateTime.Now, Id=1, Value=100});
+            transactions.Add(new Transaction() { Description = "Lançamento", TransactionId=1});
 
             //transactions.Add(new Transaction() { Description = "Lançamento", Type = Transaction.TransactionType.Income, Date = System.DateTime.Now, Id=1, Value=100});
 
@@ -43,12 +50,12 @@ namespace WiseControl.Infra.Data.Repositories
 
         }
 
-        Task<Transaction> ITransactionRepository.RemoveAsync(Transaction product)
+        Task<Transaction> ITransactionRepository.RemoveAsync(Transaction transaction)
         {
             throw new NotImplementedException();
         }
 
-        Task<Transaction> ITransactionRepository.UpdateAsync(Transaction product)
+        Task<Transaction> ITransactionRepository.UpdateAsync(Transaction transaction)
         {
             throw new NotImplementedException();
         }

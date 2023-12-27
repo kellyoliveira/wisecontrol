@@ -11,11 +11,11 @@ import { ActivatedRoute, Router } from "@angular/router";
 })
 export class TransactionsPage  {
 
-  public transaction: Transaction = new Transaction();
-
   success: boolean = false;
   hasResult: boolean = false;
+  private totalCount = 0;
 
+  protected transactions: Transaction[] = [];
 
   constructor(
     private zone: NgZone,
@@ -28,30 +28,43 @@ export class TransactionsPage  {
     
     this.success = false;
     this.hasResult = false;
-
-    this.transaction = new Transaction();
   }
 
-  /*private loadTransaction() {
+  ngOnInit() {
+   
+    this.loadTransactions();
+    
+  }
 
-    let transactionId = this.route.snapshot.paramMap.get('id')!;
+
+  private loadTransactions() {
 
     this.messageService.isLoadingData = true;
     
     this.hasResult = false;
     this.success = false;////////////////
 
-    this.transactionService.getTransaction(transactionId).subscribe(t => {
+    this.transactionService.getTransactions(c => { this.totalCount = c; }).subscribe(t => {
 
       this.messageService.isLoadingData = false;
     
-      this.transaction = t;     
+      this.transactions = t;     
 
       this.hasResult = true;
       this.success = true;
+
+    
       
     });
-  }*/
+  }
 
- 
+
+  itemAction(content: Transaction) {
+
+    content.transactionUId = '1';
+    
+    this.router.navigate(['../transaction-detail/' + content.transactionUId ]);
+
+    
+  }
 }
