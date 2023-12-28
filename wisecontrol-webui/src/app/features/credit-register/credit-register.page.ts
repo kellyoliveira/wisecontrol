@@ -11,11 +11,12 @@ import { ActivatedRoute, Router } from "@angular/router";
 })
 export class CreditRegisterPage  {
 
+  
   success: boolean = false;
   hasResult: boolean = false;
-  private totalCount = 0;
-
-  protected transactions: Transaction[] = [];
+  protected transaction: Transaction = new Transaction();
+  errorMessage: string = "";
+  
 
   constructor(
     private zone: NgZone,
@@ -32,39 +33,41 @@ export class CreditRegisterPage  {
 
   ngOnInit() {
    
-    this.loadTransactions();
-    
   }
 
 
-  private loadTransactions() {
+  registerCredit() {
+    
+  }
 
+  saveTransaction() {
+
+    this.errorMessage = '';
+    this.messageService.blockUI();
     this.messageService.isLoadingData = true;
-    
-    this.hasResult = false;
-    this.success = false;////////////////
 
-    this.transactionService.getTransactions(c => { this.totalCount = c; }).subscribe(t => {
-
-      this.messageService.isLoadingData = false;
-    
-      this.transactions = t;     
-
-      this.hasResult = true;
-      this.success = true;
-
-    
+    this.transactionService.createTransaction(this.transaction).subscribe(
+      p => {
       
-    });
+        this.messageService.isLoadingData = false;
+        this.success = true;
+        
+        this.transaction.transactionId = p.transactionId;
+
+      },
+      err => {
+
+        alert(JSON.stringify(err));
+
+        this.messageService.isLoadingData = false;
+        this.success = false;
+
+
+        this.errorMessage = err.error.message;
+
+        alert(this.errorMessage);
+      }
+    );
   }
 
-
-  itemAction(content: Transaction) {
-
-    content.transactionId = '1';
-    
-    this.router.navigate(['../transaction-detail/' + content.transactionId ]);
-
-    
-  }
 }

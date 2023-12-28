@@ -13,6 +13,8 @@ export class AccountRegisterPage  {
 
   success: boolean = false;
   hasResult: boolean = false;
+  errorMessage: string = "";
+  account:Account = new Account();
 
   constructor(
     private zone: NgZone,
@@ -25,6 +27,7 @@ export class AccountRegisterPage  {
     
     this.success = false;
     this.hasResult = false;
+    
   }
 
   ngOnInit() {
@@ -33,5 +36,39 @@ export class AccountRegisterPage  {
   }
 
 
+  registerAccount() {
+
+    
+  }
+
+  saveAccount() {
+
+    this.errorMessage = '';
+    this.messageService.blockUI();
+    this.messageService.isLoadingData = true;
+
+    this.accountService.createAccount(this.account).subscribe(
+      p => {
+      
+        this.messageService.isLoadingData = false;
+        this.success = true;
+        
+        this.account.accountId = p.accountId;
+
+      },
+      err => {
+
+        alert(JSON.stringify(err));
+
+        this.messageService.isLoadingData = false;
+        this.success = false;
+
+
+        this.errorMessage = err.error.message;
+
+        alert(this.errorMessage);
+      }
+    );
+  }
   
 }
