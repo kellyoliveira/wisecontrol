@@ -55,6 +55,19 @@ namespace WiseControl.Application.Services
             return transactionEntity;
         }
 
+
+        public async Task<DashboardDTO> GetDashboard()
+        {
+           
+
+            var dashboardDTO = new DashboardDTO() { TotalBalanceDescription = "60", TotalDebitDescription = "20", TotalCreditDescription = "80" };
+
+
+
+            return dashboardDTO;
+        }
+
+
         public async Task Add(TransactionDTO transactionDto)
         {
             var transactionEntity = _mapper.Map<Transaction>(transactionDto);

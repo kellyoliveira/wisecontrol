@@ -22,7 +22,7 @@ export class AccountService extends BaseService {
 
 
   public getAccounts(out: (totalCount: number) => void) {
-    const url = `${environment.SERVER_HOST}/api/transactions/`;
+    const url = `${environment.SERVER_HOST}/api/accounts/`;
     
 
     return this.getEntities<Account>(() => new Account(), url, out).pipe(

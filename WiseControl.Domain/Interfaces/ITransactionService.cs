@@ -19,5 +19,9 @@ namespace WiseControl.Domain.Interfaces
 
         Task Remove(int? id);
 
+        
+
+        Task<DashboardDTO> GetDashboard();
+
     }
 }

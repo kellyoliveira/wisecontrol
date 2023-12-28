@@ -5,16 +5,20 @@ namespace WiseControl.DTOs
 {
     public class DashboardDTO
     {
-        public string TotalBalanceDescription;
-        public string TotalDebitDescription;
-        public string TotalCreditDescription;
+        public string TotalBalanceDescription { get; set; }
+        public string TotalDebitDescription { get; set; }
+        public string TotalCreditDescription { get; set; }
 
         
-        [JsonIgnore]
-        public TransactionDTO[] Transactions;
+        public TransactionDTO[] Transactions {
+            get;
+            set;
+        }
 
 
-        [JsonIgnore]
-        public AccountDTO[]  Accounts;
+        public AccountDTO[] Accounts {
+            get;
+            set;
+        }
     }
 }

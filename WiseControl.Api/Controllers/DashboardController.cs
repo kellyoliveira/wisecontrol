@@ -23,39 +23,23 @@ namespace WiseControl.Api.Controllers
         }
 
 
-        [HttpGet]
-        public ActionResult<DashboardDTO> Get()
+        [HttpGet()]
+        public async Task<ActionResult<TransactionDTO>> Get()
         {
-            var dashboardDTO = new DashboardDTO();
+            var dashboardDTO = await _transactionService.GetDashboard();
+            if (dashboardDTO == null)
+            {
+                return NotFound("Dashboard not found");
+            }
 
-            dashboardDTO.TotalDebitDescription = "0";
+            dashboardDTO.Transactions = new TransactionDTO[] { new TransactionDTO { Description = "Lançamento", TransactionId=1} };
+            dashboardDTO.Accounts = new AccountDTO[] { new AccountDTO { Description = "Lançamento", AccountId = 1 } };
 
-            dashboardDTO.TotalCreditDescription = "0";
-
-
-            dashboardDTO.TotalBalanceDescription = "0";
-
-
-            List<TransactionDTO> transactionsDTos = new List<TransactionDTO>();
-            transactionsDTos.Add(new TransactionDTO() { Description = "Lançamento", TransactionId = 1 });
-
-
-          
-
-            dashboardDTO.Transactions = transactionsDTos.ToArray();
-
-
-            List<AccountDTO> accountsDTos = new List<AccountDTO>();
-
-            //transactionsDTos.Add(new TransactionDTO() { Description = "Lançamento", Date = System.DateTime.Now, Id = 1, Value = 100 });
-
-            accountsDTos.Add(new AccountDTO() { Description = "Lançamento", AccountId = 1 });
-
-            dashboardDTO.Accounts = accountsDTos.ToArray();
 
 
             return Ok(dashboardDTO);
         }
 
+        
     }
 }
