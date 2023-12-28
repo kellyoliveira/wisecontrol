@@ -11,7 +11,7 @@ namespace WiseControl.Domain.Entities
 
         public int AccountId { get; set; }
 
-        public String Description { get; set; }
+        public String OwnerName { get; set; }
 
     }
 }

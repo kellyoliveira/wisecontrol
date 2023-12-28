@@ -1,7 +1,7 @@
 export class Account {
 
 
-    public accountUId : string = '';
-    public description : string = '';
+    public accountId : string = '';
+    public ownerName : string = '';
 
 }

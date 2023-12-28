@@ -1,6 +1,6 @@
 export class Transaction {
 
-    public transactionUId : string = '';
+    public transactionId : string = '';
     public description : string = '';
 
 }

@@ -20,6 +20,21 @@ export class AccountService extends BaseService {
     super(messageService, router, http);
   }
 
+
+  public getAccounts(out: (totalCount: number) => void) {
+    const url = `${environment.SERVER_HOST}/api/transactions/`;
+    
+
+    return this.getEntities<Account>(() => new Account(), url, out).pipe(
+      map(cs => {
+        cs.forEach(c => { 
+          
+        });
+        return cs;
+      })
+    );
+  }
+
   public getAccount(accountUId: string) {
     const url = `${environment.SERVER_HOST}/api/accounts/` + accountUId;
     return this.http.get<Account>(url).pipe();
@@ -28,14 +43,14 @@ export class AccountService extends BaseService {
 
 
   public saveAccount(account: Account): Observable<Account> {
-    if (account.accountUId) {
+    if (account.accountId) {
       return this.updateAccount(account);
     }
     return this.createAccount(account);
   }
 
   public deleteAccount(account: Account) {
-    let urlService : string = environment.SERVER_HOST + '/api/accounts/' + account.accountUId;
+    let urlService : string = environment.SERVER_HOST + '/api/accounts/' + account.accountId;
     
     return this.http.delete(urlService, this.httpOptions);
   }

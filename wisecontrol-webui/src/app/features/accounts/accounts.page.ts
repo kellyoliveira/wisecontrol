@@ -1,28 +1,28 @@
 import { Component, NgZone } from "@angular/core";
-import { Transaction } from "../../core/view-models/transaction";
 import { MessageService } from "../../core/services/message.service";
-import { TransactionService } from "../../core/services/transaction.service";
+import { AccountService } from "../../core/services/account.service";
 import { ActivatedRoute, Router } from "@angular/router";
+import { Account } from "../../core/view-models/account";
 
 @Component({
-  selector: 'app-transactions',
-  templateUrl: './transactions.page.html',
-  styleUrls: ['./transactions.page.scss'],
+  selector: 'app-accounts',
+  templateUrl: './accounts.page.html',
+  styleUrls: ['./accounts.page.scss'],
 })
-export class TransactionsPage  {
+export class AccountsPage  {
 
   success: boolean = false;
   hasResult: boolean = false;
   private totalCount = 0;
 
-  protected transactions: Transaction[] = [];
+  protected accounts: Account[] = [];
 
   constructor(
     private zone: NgZone,
     private router: Router,
     private route: ActivatedRoute,
     private messageService: MessageService,
-    private transactionService: TransactionService
+    private accountService: AccountService
   ) { 
 
     
@@ -44,11 +44,11 @@ export class TransactionsPage  {
     this.hasResult = false;
     this.success = false;////////////////
 
-    this.transactionService.getTransactions(c => { this.totalCount = c; }).subscribe(t => {
+    this.accountService.getAccounts(c => { this.totalCount = c; }).subscribe(a => {
 
       this.messageService.isLoadingData = false;
     
-      this.transactions = t;     
+      this.accounts = a;     
 
       this.hasResult = true;
       this.success = true;
@@ -59,12 +59,7 @@ export class TransactionsPage  {
   }
 
 
-  itemAction(content: Transaction) {
-
-    content.transactionId = '1';
-    
-    this.router.navigate(['../transaction-detail/' + content.transactionId ]);
-
-    
+  itemAction(content: Account) {
+      this.router.navigate(['../transaction-detail/' + content.accountId ]);
   }
 }

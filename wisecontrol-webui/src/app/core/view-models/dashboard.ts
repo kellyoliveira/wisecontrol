@@ -9,11 +9,6 @@ export class Dashboard {
     public totalDebitDescription: string = '';
     public totalCreditDescription: string = '';
 
-    public totalSavingsDescription: string = '';
-
-    public totalBillsDescripton : string = '';
-
-
     public transactions: Transaction[] = [];
 
     public accounts: Account[] = [];

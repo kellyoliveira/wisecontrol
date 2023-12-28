@@ -1,28 +1,28 @@
 import { Component, NgZone } from "@angular/core";
 import { Transaction } from "../../core/view-models/transaction";
-import { Account } from "../../core/view-models/account";
-import { Dashboard } from "../../core/view-models/dashboard";
-import { ActivatedRoute, Router } from "@angular/router";
 import { MessageService } from "../../core/services/message.service";
-import { DashboardService } from "../../core/services/dashboard.service";
+import { TransactionService } from "../../core/services/transaction.service";
+import { ActivatedRoute, Router } from "@angular/router";
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.page.html',
-  styleUrls: ['./home.page.scss'],
+  selector: 'app-debit-register',
+  templateUrl: './debit-register.page.html',
+  styleUrls: ['./debit-register.page.scss'],
 })
-export class HomePage  {
-  success: boolean = false;
-  hasResult: boolean = false;  
+export class DebitRegisterPage  {
 
-  protected dashboard: Dashboard = new Dashboard();
+  success: boolean = false;
+  hasResult: boolean = false;
+  private totalCount = 0;
+
+  protected transactions: Transaction[] = [];
 
   constructor(
     private zone: NgZone,
     private router: Router,
     private route: ActivatedRoute,
     private messageService: MessageService,
-    private dashboardService: DashboardService
+    private transactionService: TransactionService
   ) { 
 
     
@@ -32,23 +32,23 @@ export class HomePage  {
 
   ngOnInit() {
    
-    this.loadDashboard();
+    this.loadTransactions();
     
   }
 
 
-  private loadDashboard() {
+  private loadTransactions() {
 
     this.messageService.isLoadingData = true;
     
     this.hasResult = false;
     this.success = false;////////////////
 
-    this.dashboardService.getDashboard().subscribe(dash => {
+    this.transactionService.getTransactions(c => { this.totalCount = c; }).subscribe(t => {
 
       this.messageService.isLoadingData = false;
     
-      this.dashboard = dash;     
+      this.transactions = t;     
 
       this.hasResult = true;
       this.success = true;
@@ -59,12 +59,12 @@ export class HomePage  {
   }
 
 
-  itemTransactionAction(content: Transaction) {
-    this.router.navigate(['../transaction-detail/' + content.transactionId ]);
-  }
+  itemAction(content: Transaction) {
 
-  itemAccountAction(content: Account) {
-    this.router.navigate(['../transaction-detail/' + content.accountId ]);
+    content.transactionId = '1';
+    
+    this.router.navigate(['../transaction-detail/' + content.transactionId ]);
+
+    
   }
- 
 }

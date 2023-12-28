@@ -1,26 +1,40 @@
-<!-- Transactions -->
-<div class="section mt-2">
-    <div class="section-title">Mais Recentes</div>
-
-    <div class="transactions"  *ngFor="let transaction of transactions" >
-        <!-- item -->
-        <a (click)="itemAction(transaction)" class="item">
-            <div class="detail">
-                <img src="assets/img/sample/brand/1.jpg" alt="img" class="image-block imaged w48">
-                <div>
-                    <strong>Amazon</strong>
-                    <p>{{transaction.description}}</p>
-                </div>
-            </div>
-            <div class="right">
-                <div class="price text-danger"> - $ 1,500</div>
-            </div>
+<div class="appHeader">
+    <div class="left">
+        <a href="/home" class="headerButton goBack">
+            <i class="icon ion-md-arrow-back"></i>
         </a>
-        <!-- * item -->
-
+    </div>
+    <div class="pageTitle">
+        Lançamentos
     </div>
 </div>
+<!-- * App Header -->
 
+<div id="appCapsule">
+        
+    <!-- Transactions -->
+    <div class="section mt-2">
+        <div class="section-title">Mais Recentes</div>
+
+        <div class="transactions"  *ngFor="let transaction of transactions" >
+            <!-- item -->
+            <a (click)="itemAction(transaction)" class="item">
+                <div class="detail">
+                    <img src="assets/img/sample/brand/1.jpg" alt="img" class="image-block imaged w48">
+                    <div>
+                        <strong>Amazon</strong>
+                        <p>{{transaction.description}}</p>
+                    </div>
+                </div>
+                <div class="right">
+                    <div class="price text-danger"> - $ 1,500</div>
+                </div>
+            </a>
+            <!-- * item -->
+
+        </div>
+    </div>
+</div>
     
     
     

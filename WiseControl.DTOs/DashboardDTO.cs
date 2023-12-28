@@ -9,10 +9,7 @@ namespace WiseControl.DTOs
         public string TotalDebitDescription;
         public string TotalCreditDescription;
 
-        public string TotalSavingsDescription;
-
-        public string TotalBillsDescripton;
-
+        
         [JsonIgnore]
         public TransactionDTO[] Transactions;
 

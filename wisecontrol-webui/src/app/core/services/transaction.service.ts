@@ -21,8 +21,8 @@ export class TransactionService extends BaseService {
     super(messageService, router, http);
   }
 
-  public getTransaction(transactionUId: string) {
-    const url = `${environment.SERVER_HOST}/api/transactions/` + transactionUId;
+  public getTransaction(transactionId: string) {
+    const url = `${environment.SERVER_HOST}/api/transactions/` + transactionId;
     return this.http.get<Transaction>(url).pipe();
   }
 
@@ -41,7 +41,7 @@ export class TransactionService extends BaseService {
   }
 
   public saveTransaction(transaction: Transaction): Observable<Transaction> {
-    if (transaction.transactionUId) {
+    if (transaction.transactionId) {
       return this.updateTransaction(transaction);
     }
     return this.createTransaction(transaction);
@@ -50,7 +50,7 @@ export class TransactionService extends BaseService {
   
 
   public deleteTransaction(transaction: Transaction) {
-    let urlService : string = environment.SERVER_HOST + '/api/transactions/' + transaction.transactionUId;
+    let urlService : string = environment.SERVER_HOST + '/api/transactions/' + transaction.transactionId;
     
     return this.http.delete(urlService, this.httpOptions);
   }

@@ -18,7 +18,7 @@ namespace WiseControl.Infra.Data.Repositories
             //var transaction = new Transaction() { Description = "Lançamento", Date = System.DateTime.Now, Id = 1, Value = 100 };
 
 
-            var account = new Account() { Description = "Lançamento", AccountId = 1 };
+            var account = new Account() { OwnerName = "Lançamento", AccountId = 1 };
 
             var result = await Task.FromResult(account);
 
@@ -30,7 +30,7 @@ namespace WiseControl.Infra.Data.Repositories
         {
             List<Account> accounts = new List<Account>();
 
-            accounts.Add(new Account() { Description = "Lançamento", AccountId = 1 });
+            accounts.Add(new Account() { OwnerName = "Lançamento", AccountId = 1 });
 
            
             var result = await Task.FromResult(accounts);
