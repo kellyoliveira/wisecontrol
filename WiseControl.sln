@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WiseControl.Infra.Data", "W
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WiseControl.Infra.IoC", "WiseControl.Infra.IoC\WiseControl.Infra.IoC.csproj", "{7B4BE6AA-AFE2-4EB3-B8FC-E542EFBFD3EF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WiseControl.DTOs", "WiseControl.DTOs\WiseControl.DTOs.csproj", "{A8F83F89-3161-4303-9CEE-89BB8C815B32}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WiseControl.DTOs", "WiseControl.DTOs\WiseControl.DTOs.csproj", "{A8F83F89-3161-4303-9CEE-89BB8C815B32}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WiseControl.Application.Tests", "WiseControl.Application.Tests\WiseControl.Application.Tests.csproj", "{97EC8C17-EC40-4024-9362-55C8539F1F01}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{A8F83F89-3161-4303-9CEE-89BB8C815B32}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A8F83F89-3161-4303-9CEE-89BB8C815B32}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A8F83F89-3161-4303-9CEE-89BB8C815B32}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97EC8C17-EC40-4024-9362-55C8539F1F01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97EC8C17-EC40-4024-9362-55C8539F1F01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97EC8C17-EC40-4024-9362-55C8539F1F01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97EC8C17-EC40-4024-9362-55C8539F1F01}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

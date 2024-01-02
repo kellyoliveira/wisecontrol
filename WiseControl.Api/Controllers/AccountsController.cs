@@ -12,76 +12,76 @@ namespace WiseControl.Api.Controllers
         private readonly ILogger<AccountsController> _logger;
         private readonly IAccountService _accountService;
 
-        public AccountsController(ILogger<AccountsController> logger, IAccountService accountService, IConfiguration configuration)
+        public AccountsController(ILogger<AccountsController> logger, IAccountService accountService)
         {
             _logger = logger;
             _accountService = accountService;
         }
 
-    [HttpGet]
-    public async Task<ActionResult<IEnumerable<TransactionDTO>>> Get()
-    {
-        var transactions = await _accountService.GetAccounts();
-        if (transactions == null)
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<AccountDTO>>> Get()
         {
-            return NotFound("Accounts not found");
-        }
-        return Ok(transactions);
-    }
-
-    [HttpGet("{id}", Name = "GetAccount")]
-    public async Task<ActionResult<AccountDTO>> Get(int id)
-    {
-        var accountDTO = await _accountService.GetById(id);
-        if (accountDTO == null)
-        {
-            return NotFound("Account not found");
-        }
-        return Ok(accountDTO);
-    }
-
-    [HttpPost]
-    public async Task<ActionResult> Post([FromBody] AccountDTO accountDTO)
-    {
-        if (accountDTO == null)
-            return BadRequest("Data Invalid");
-
-        await _accountService.Add(accountDTO);
-
-        return new CreatedAtRouteResult("GetAccount",
-            new { id = accountDTO.AccountId }, accountDTO);
-    }
-
-    [HttpPut("{id}")]
-    public async Task<ActionResult> Put(int id, [FromBody] AccountDTO accountDTO)
-    {
-        if (id != accountDTO.AccountId)
-        {
-            return BadRequest("Data invalid");
+            var transactions = await _accountService.GetAccounts();
+            if (transactions == null)
+            {
+                return NotFound("Accounts not found");
+            }
+            return Ok(transactions);
         }
 
-        if (accountDTO == null)
-            return BadRequest("Data invalid");
-
-        await _accountService.Update(accountDTO);
-
-        return Ok(accountDTO);
-    }
-
-    [HttpDelete("{id}")]
-    public async Task<ActionResult<AccountDTO>> Delete(int id)
-    {
-        var accountDTO = await _accountService.GetById(id);
-
-        if (accountDTO == null)
+        [HttpGet("{id}", Name = "GetAccount")]
+        public async Task<ActionResult<AccountDTO>> Get(int id)
         {
-            return NotFound("Transaction not found");
+            var accountDTO = await _accountService.GetById(id);
+            if (accountDTO == null)
+            {
+                return NotFound("Account not found");
+            }
+            return Ok(accountDTO);
         }
 
-        await _accountService.Remove(id);
+        [HttpPost]
+        public async Task<ActionResult> Post([FromBody] AccountDTO accountDTO)
+        {
+            if (accountDTO == null)
+                return BadRequest("Data Invalid");
 
-        return Ok(accountDTO);
-    }
+            await _accountService.Add(accountDTO);
+
+            return new CreatedAtRouteResult("GetAccount",
+                new { id = accountDTO.AccountId }, accountDTO);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult> Put(int id, [FromBody] AccountDTO accountDTO)
+        {
+            if (id != accountDTO.AccountId)
+            {
+                return BadRequest("Data invalid");
+            }
+
+            if (accountDTO == null)
+                return BadRequest("Data invalid");
+
+            await _accountService.Update(accountDTO);
+
+            return Ok(accountDTO);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<AccountDTO>> Delete(int id)
+        {
+            var accountDTO = await _accountService.GetById(id);
+
+            if (accountDTO == null)
+            {
+                return NotFound("Transaction not found");
+            }
+
+            await _accountService.Remove(id);
+
+            return Ok(accountDTO);
+        }
 
 }
 }

@@ -12,6 +12,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.Configure<WiseControlDatabaseSettings>(builder.Configuration.GetSection("WiseControlDatabaseSettings"));
+
 
 builder.Services.AddInfrastructure();
 
@@ -31,7 +33,6 @@ app.UseCors(builder =>
         .AllowAnyHeader());
 
 
-builder.Services.Configure<WiseControlDatabaseSettings>(builder.Configuration.GetSection("WiseControlDatabaseSettings"));
 
 
 //app.UseHttpsRedirection();

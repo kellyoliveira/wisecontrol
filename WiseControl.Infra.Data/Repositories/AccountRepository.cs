@@ -4,6 +4,8 @@ using MongoDB.Driver;
 using System.Collections.Generic;
 using System.Linq;
 using WiseControl.Domain.Settings;
+using Microsoft.Extensions.Options;
+
 
 namespace WiseControl.Infra.Data.Repositories
 {
@@ -13,10 +15,10 @@ namespace WiseControl.Infra.Data.Repositories
         private readonly IMongoCollection<Account> _accounts;
 
 
-        public AccountRepository(WiseControlDatabaseSettings settings)
+        public AccountRepository(IOptions<WiseControlDatabaseSettings> settings)
         {
-            var client = new MongoClient(settings.ConnectionString);
-            var database = client.GetDatabase(settings.DatabaseName);
+            var client = new MongoClient(settings.Value.ConnectionString);
+            var database = client.GetDatabase(settings.Value.DatabaseName);
 
             _accounts = database.GetCollection<Account>("Accounts");
 

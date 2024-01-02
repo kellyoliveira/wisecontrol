@@ -25,19 +25,20 @@ namespace WiseControl.Application.Services
         public async Task<IEnumerable<TransactionDTO>> GetTransactions()
         {
 
+            var transactionsEntities = await _transactionRepository.GetTransactionsAsync();
+
             List<TransactionDTO> transactionsDTos = new List<TransactionDTO>();
 
-            //transactionsDTos.Add(new TransactionDTO() { Description = "Lançamento", Date = System.DateTime.Now, Id = 1, Value = 100 });
 
-            transactionsDTos.Add(new TransactionDTO() { Description = "Lançamento", TransactionId = 1});
+            foreach (var transaction in transactionsEntities) {
+                transactionsDTos.Add(new TransactionDTO() { Description = transaction.Description, TransactionId = transaction.TransactionId });
 
-
-            return transactionsDTos;
-
-            //var transactionsEntities = await _transactionRepository.GetTransactionsAsync();
+            }
 
 
             //return _mapper.Map<IEnumerable<TransactionDTO>>(transactionsEntities);
+
+            return transactionsDTos;
 
         }
 

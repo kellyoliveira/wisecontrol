@@ -11,6 +11,7 @@ using WiseControl.Domain.Interfaces;
 using WiseControl.Domain.Settings;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using Transaction = WiseControl.Domain.Entities.Transaction;
+using Microsoft.Extensions.Options;
 
 namespace WiseControl.Infra.Data.Repositories
 {
@@ -21,9 +22,9 @@ namespace WiseControl.Infra.Data.Repositories
         private readonly IMongoCollection<Transaction> _transactions;
 
 
-        public TransactionRepository(WiseControlDatabaseSettings settings) {
-            var client = new MongoClient(settings.ConnectionString);
-            var database = client.GetDatabase(settings.DatabaseName);
+        public TransactionRepository(IOptions<WiseControlDatabaseSettings> settings) {
+            var client = new MongoClient(settings.Value.ConnectionString);
+            var database = client.GetDatabase(settings.Value.DatabaseName);
 
             _transactions = database.GetCollection<Transaction>("Transactions");
 
