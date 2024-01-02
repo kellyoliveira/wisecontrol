@@ -1,52 +1,71 @@
 ﻿using WiseControl.Domain.Interfaces;
 using Account = WiseControl.Domain.Entities.Account;
+using MongoDB.Driver;
+using System.Collections.Generic;
+using System.Linq;
+using WiseControl.Domain.Settings;
 
 namespace WiseControl.Infra.Data.Repositories
 {
     public class AccountRepository : IAccountRepository
     {
 
+        private readonly IMongoCollection<Account> _accounts;
 
 
-        Task<Account> IAccountRepository.CreateAsync(Account account)
+        public AccountRepository(WiseControlDatabaseSettings settings)
         {
-            throw new NotImplementedException();
+            var client = new MongoClient(settings.ConnectionString);
+            var database = client.GetDatabase(settings.DatabaseName);
+
+            _accounts = database.GetCollection<Account>("Accounts");
+
+        }
+
+
+        public async Task<Account> CreateAsync(Account account)
+        {
+
+            await _accounts.InsertOneAsync(account);
+
+            return account;
+            
+        }
+
+
+        public async Task<Account> RemoveAsync(Account account)
+        {
+            var result = await _accounts.DeleteOneAsync(accountDB => accountDB.AccountId == account.AccountId);
+
+            return account;
+            
+        }
+
+        public async Task<Account> UpdateAsync(Account account)
+        {
+            var result = await _accounts.ReplaceOneAsync(accountDB => accountDB.AccountId == account.AccountId, account);
+
+            return account;
         }
 
         public async Task<Account> GetByIdAsync(int? id)
         {
-            //var transaction = new Transaction() { Description = "Lançamento", Date = System.DateTime.Now, Id = 1, Value = 100 };
 
+            var result = await _accounts.FindAsync<Account>(account => account.AccountId == id);
 
-            var account = new Account() { OwnerName = "Lançamento", AccountId = 1 };
-
-            var result = await Task.FromResult(account);
-
-            return result;
+            return result.FirstOrDefault();
 
         }
 
         public async Task<IEnumerable<Account>> GetAccountsAsync()
         {
-            List<Account> accounts = new List<Account>();
+            var result = await _accounts.FindAsync(account => true);
 
-            accounts.Add(new Account() { OwnerName = "Lançamento", AccountId = 1 });
+            return result.ToEnumerable<Account>();
 
-           
-            var result = await Task.FromResult(accounts);
-
-            return result;
 
         }
 
-        Task<Account> IAccountRepository.RemoveAsync(Account account)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<Account> IAccountRepository.UpdateAsync(Account account)
-        {
-            throw new NotImplementedException();
-        }
+      
     }
 }

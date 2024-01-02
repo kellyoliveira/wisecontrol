@@ -12,7 +12,7 @@ namespace WiseControl.Api.Controllers
         private readonly ILogger<AccountsController> _logger;
         private readonly IAccountService _accountService;
 
-        public AccountsController(ILogger<AccountsController> logger, IAccountService accountService)
+        public AccountsController(ILogger<AccountsController> logger, IAccountService accountService, IConfiguration configuration)
         {
             _logger = logger;
             _accountService = accountService;

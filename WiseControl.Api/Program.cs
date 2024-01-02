@@ -1,3 +1,5 @@
+using Microsoft.Extensions.Configuration;
+using WiseControl.Domain.Settings;
 using WiseControl.Infra.IoC;
 
 
@@ -29,11 +31,12 @@ app.UseCors(builder =>
         .AllowAnyHeader());
 
 
+builder.Services.Configure<WiseControlDatabaseSettings>(builder.Configuration.GetSection("WiseControlDatabaseSettings"));
+
 
 //app.UseHttpsRedirection();
 
 app.UseAuthorization();
-
 app.MapControllers();
-
 app.Run();
+

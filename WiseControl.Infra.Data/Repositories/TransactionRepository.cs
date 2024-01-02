@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MongoDB.Driver;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 using System.Transactions;
 using WiseControl.Domain.Entities;
 using WiseControl.Domain.Interfaces;
+using WiseControl.Domain.Settings;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using Transaction = WiseControl.Domain.Entities.Transaction;
 
@@ -14,50 +16,62 @@ namespace WiseControl.Infra.Data.Repositories
 {
     public class TransactionRepository : ITransactionRepository
     {
-     
-       
-        
-        
-        Task<Transaction> ITransactionRepository.CreateAsync(Transaction transaction)
+
+
+        private readonly IMongoCollection<Transaction> _transactions;
+
+
+        public TransactionRepository(WiseControlDatabaseSettings settings) {
+            var client = new MongoClient(settings.ConnectionString);
+            var database = client.GetDatabase(settings.DatabaseName);
+
+            _transactions = database.GetCollection<Transaction>("Transactions");
+
+        }
+
+        public async Task<Transaction> CreateAsync(Transaction transaction)
         {
-            throw new NotImplementedException();
+
+            await _transactions.InsertOneAsync(transaction);
+
+            return transaction;
+
+        }
+
+
+        public async Task<Transaction> RemoveAsync(Transaction transaction)
+        {
+            var result = await _transactions.DeleteOneAsync(transactionDB => transactionDB.TransactionId == transaction.TransactionId);
+
+            return transaction;
+
+        }
+
+        public async Task<Transaction> UpdateAsync(Transaction transaction)
+        {
+            var result = await _transactions.ReplaceOneAsync(transactionDB => transactionDB.TransactionId == transaction.TransactionId, transaction);
+
+            return transaction;
         }
 
         public async Task<Transaction> GetByIdAsync(int? id)
         {
-            //var transaction = new Transaction() { Description = "Lançamento", Date = System.DateTime.Now, Id = 1, Value = 100 };
 
+            var result = await _transactions.FindAsync<Transaction>(transaction => transaction.TransactionId == id);
 
-            var transaction = new Transaction() { Description = "Lançamento", TransactionId = 1};
-
-            var result = await Task.FromResult(transaction);
-
-            return result;
+            return result.FirstOrDefault();
 
         }
 
         public async Task<IEnumerable<Transaction>> GetTransactionsAsync()
         {
-            List<Transaction> transactions = new List<Transaction>();
+            var result = await _transactions.FindAsync(transaction => true);
 
-            transactions.Add(new Transaction() { Description = "Lançamento", TransactionId=1});
+            return result.ToEnumerable<Transaction>();
 
-            //transactions.Add(new Transaction() { Description = "Lançamento", Type = Transaction.TransactionType.Income, Date = System.DateTime.Now, Id=1, Value=100});
-
-            var result = await Task.FromResult(transactions);
-
-            return result;
 
         }
 
-        Task<Transaction> ITransactionRepository.RemoveAsync(Transaction transaction)
-        {
-            throw new NotImplementedException();
-        }
 
-        Task<Transaction> ITransactionRepository.UpdateAsync(Transaction transaction)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

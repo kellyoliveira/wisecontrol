@@ -24,7 +24,7 @@ namespace WiseControl.Infra.IoC
             services.AddScoped<ITransactionRepository, TransactionRepository>();
             services.AddScoped<ITransactionService, TransactionService>();
 
-            
+
             //services.AddAutoMapper(() => xAppDomain.CurrentDomain.GetAssemblies());
 
 
