@@ -19,14 +19,14 @@ namespace WiseControl.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<AccountDTO>>> Get()
+        public async Task<ActionResult<ListDTO<AccountDTO>>> Get()
         {
             var accounts = await _accountService.GetAccounts();
             if (accounts == null)
             {
                 return NotFound("Accounts not found");
             }
-            return Ok(accounts);
+            return Ok(new ListDTO<AccountDTO>(accounts.ToArray()));
         }
 
         [HttpGet("{id}", Name = "GetAccount")]

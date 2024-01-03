@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { MessageService } from './message.service';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
+import { List } from '../view-models/list';
 
 @Injectable({
     providedIn: 'root'
@@ -21,18 +22,10 @@ export class AccountService extends BaseService {
   }
 
 
-  public getAccounts(out: (totalCount: number) => void) {
+  public getAccounts() : Observable<List<Account>> {
     const url = `${environment.SERVER_HOST}/api/accounts/`;
     
-
-    return this.getEntities<Account>(() => new Account(), url, out).pipe(
-      map(cs => {
-        cs.forEach(c => { 
-          
-        });
-        return cs;
-      })
-    );
+    return this.http.get<List<Account>>(url).pipe();
   }
 
   public getAccount(accountUId: string) {

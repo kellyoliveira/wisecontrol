@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { MessageService } from './message.service';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
+import { List } from '../view-models/list';
 
 
 @Injectable({
@@ -26,20 +27,12 @@ export class TransactionService extends BaseService {
     return this.http.get<Transaction>(url).pipe();
   }
 
-  public getTransactions(out: (totalCount: number) => void) {
+  
+  public getTransactions() : Observable<List<Transaction>> {
     const url = `${environment.SERVER_HOST}/api/transactions/`;
     
-
-    return this.getEntities<Transaction>(() => new Transaction(), url, out).pipe(
-      map(cs => {
-        cs.forEach(c => { 
-          
-        });
-        return cs;
-      })
-    );
+    return this.http.get<List<Transaction>>(url).pipe();
   }
-
 
   public deleteTransaction(transaction: Transaction) {
     let urlService : string = environment.SERVER_HOST + '/api/transactions/' + transaction.transactionId;

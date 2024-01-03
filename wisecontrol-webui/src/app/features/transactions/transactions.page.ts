@@ -3,6 +3,7 @@ import { Transaction } from "../../core/view-models/transaction";
 import { MessageService } from "../../core/services/message.service";
 import { TransactionService } from "../../core/services/transaction.service";
 import { ActivatedRoute, Router } from "@angular/router";
+import { List } from "../../core/view-models/list";
 
 @Component({
   selector: 'app-transactions',
@@ -11,11 +12,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 })
 export class TransactionsPage  {
 
-  success: boolean = false;
-  hasResult: boolean = false;
-  private totalCount = 0;
-
-  protected transactions: Transaction[] = [];
+  public transactions: List<Transaction> = new List<Transaction>();
 
   constructor(
     private zone: NgZone,
@@ -26,8 +23,8 @@ export class TransactionsPage  {
   ) { 
 
     
-    this.success = false;
-    this.hasResult = false;
+    this.transactions.success = false;
+    this.transactions.hasResult = false;
   }
 
   ngOnInit() {
@@ -41,17 +38,17 @@ export class TransactionsPage  {
 
     this.messageService.isLoadingData = true;
     
-    this.hasResult = false;
-    this.success = false;////////////////
+    this.transactions.hasResult = false;
+    this.transactions.success = false;////////////////
 
-    this.transactionService.getTransactions(c => { this.totalCount = c; }).subscribe(t => {
+    this.transactionService.getTransactions().subscribe(t => {
 
       this.messageService.isLoadingData = false;
     
       this.transactions = t;     
 
-      this.hasResult = true;
-      this.success = true;
+      this.transactions.hasResult = true;
+      this.transactions.success = true;
 
     
       

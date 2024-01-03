@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using WiseControl.DTOs;
 using WiseControl.Domain.Interfaces;
+using WiseControl.Application.Services;
 
 
 namespace WiseControl.Api.Controllers
@@ -19,16 +20,18 @@ namespace WiseControl.Api.Controllers
             _transactionService = transactionService;
         }
 
+
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TransactionDTO>>> Get()
+        public async Task<ActionResult<ListDTO<TransactionDTO>>> Get()
         {
             var transactions = await _transactionService.GetTransactions();
             if (transactions == null)
             {
                 return NotFound("Transactions not found");
             }
-            return Ok(transactions);
+            return Ok(new ListDTO<TransactionDTO>(transactions.ToArray()));
         }
+
 
         [HttpGet("{id}", Name = "GetTransaction")]
         public async Task<ActionResult<TransactionDTO>> Get(int id)

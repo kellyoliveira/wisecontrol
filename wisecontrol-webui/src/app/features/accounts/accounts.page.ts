@@ -3,6 +3,7 @@ import { MessageService } from "../../core/services/message.service";
 import { AccountService } from "../../core/services/account.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Account } from "../../core/view-models/account";
+import { List } from "../../core/view-models/list";
 
 @Component({
   selector: 'app-accounts',
@@ -11,11 +12,9 @@ import { Account } from "../../core/view-models/account";
 })
 export class AccountsPage  {
 
-  success: boolean = false;
-  hasResult: boolean = false;
-  private totalCount = 0;
+  
 
-  protected accounts: Account[] = [];
+  public accounts: List<Account> = new List<Account>();
 
   constructor(
     private zone: NgZone,
@@ -23,12 +22,7 @@ export class AccountsPage  {
     private route: ActivatedRoute,
     private messageService: MessageService,
     private accountService: AccountService
-  ) { 
-
-    
-    this.success = false;
-    this.hasResult = false;
-  }
+  ) {}
 
   ngOnInit() {
    
@@ -41,19 +35,20 @@ export class AccountsPage  {
 
     this.messageService.isLoadingData = true;
     
-    this.hasResult = false;
-    this.success = false;////////////////
+    this.accounts.hasResult = false;
+    this.accounts.success = false;////////////////
 
-    this.accountService.getAccounts(c => { this.totalCount = c; }).subscribe(a => {
+    
+    this.accountService.getAccounts().subscribe(a => {
 
       this.messageService.isLoadingData = false;
 
-      alert(JSON.stringify(a));
+      console.log(JSON.stringify(a));
     
-      this.accounts = a;     
+      this.accounts = a;  
 
-      this.hasResult = true;
-      this.success = true;
+      this.accounts.hasResult = true;
+      this.accounts.success = true;
 
       console.log(JSON.stringify(a));
       
@@ -61,3 +56,7 @@ export class AccountsPage  {
   }
 
 }
+function foreach() {
+  throw new Error("Function not implemented.");
+}
+
