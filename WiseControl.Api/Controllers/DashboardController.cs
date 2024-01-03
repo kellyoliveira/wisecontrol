@@ -26,15 +26,21 @@ namespace WiseControl.Api.Controllers
         [HttpGet()]
         public async Task<ActionResult<TransactionDTO>> Get()
         {
-            var dashboardDTO = await _transactionService.GetDashboard();
-            if (dashboardDTO == null)
+            
+            var transactions = await _transactionService.GetTransactions();
+
+
+            var accounts = await _accountService.GetAccounts();
+
+          
+
+            if (transactions == null || accounts == null)
             {
                 return NotFound("Dashboard not found");
             }
 
-            dashboardDTO.Transactions = new TransactionDTO[] { new TransactionDTO { Description = "Lançamento", TransactionId=1} };
-            dashboardDTO.Accounts = new AccountDTO[] { new AccountDTO { Description = "Lançamento", AccountId = 1 } };
 
+            var dashboardDTO = new DashboardDTO(transactions.ToArray(), accounts.ToArray());
 
 
             return Ok(dashboardDTO);

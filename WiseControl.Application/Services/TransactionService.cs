@@ -32,25 +32,12 @@ namespace WiseControl.Application.Services
 
         }
 
-        public async Task<TransactionDTO> GetById(int? id)
+        public async Task<TransactionDTO> GetById(long? id)
         {
             var transactionEntity = await _transactionRepository.GetByIdAsync(id);
 
             return _mapper.Map<TransactionDTO>(transactionEntity);
         }
-
-
-        public async Task<DashboardDTO> GetDashboard()
-        {
-           
-
-            var dashboardDTO = new DashboardDTO() { TotalBalanceDescription = "60", TotalDebitDescription = "20", TotalCreditDescription = "80" };
-
-
-
-            return dashboardDTO;
-        }
-
 
         public async Task Add(TransactionDTO transactionDto)
         {
@@ -72,7 +59,7 @@ namespace WiseControl.Application.Services
             await _transactionRepository.UpdateAsync(transactionEntity);
         }
 
-        public async Task Remove(int? id)
+        public async Task Remove(long? id)
         {
             var transactionEntity = _transactionRepository.GetByIdAsync(id).Result;
             await _transactionRepository.RemoveAsync(transactionEntity);

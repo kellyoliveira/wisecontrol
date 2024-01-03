@@ -27,6 +27,9 @@ namespace WiseControl.Infra.Data.Repositories
 
         public async Task<Account> CreateAsync(Account account)
         {
+            var count = _accounts.CountDocuments(accounts => true);
+
+            account.AccountId = count + 1;
 
             await _accounts.InsertOneAsync(account);
 
@@ -50,7 +53,7 @@ namespace WiseControl.Infra.Data.Repositories
             return account;
         }
 
-        public async Task<Account> GetByIdAsync(int? id)
+        public async Task<Account> GetByIdAsync(long? id)
         {
 
             var result = await _accounts.FindAsync<Account>(account => account.AccountId == id);

@@ -12,13 +12,14 @@ namespace WiseControl.Domain.Interfaces
 
         Task<IEnumerable<Transaction>> GetTransactionsAsync();
 
-        Task<Transaction> GetByIdAsync(int? id);
+        Task<Transaction> GetByIdAsync(long? id);
         
-        Task<Transaction> CreateAsync(Transaction product);
+        Task<Transaction> CreateAsync(Transaction transaction);
         
-        Task<Transaction> UpdateAsync(Transaction product);
+        Task<Transaction> UpdateAsync(Transaction transaction);
         
-        Task<Transaction> RemoveAsync(Transaction product);
+        Task<Transaction> RemoveAsync(Transaction transaction);
+
 
     }
 }

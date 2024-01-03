@@ -16,7 +16,7 @@ namespace WiseControl.Domain.Entities
         [BsonRepresentation(BsonType.ObjectId)]
         public String TransactionUId { get; set; }
        
-        public int TransactionId { get; set; }
+        public long TransactionId { get; set; }
         
         
         public TransactionType Type { get; set; }

@@ -12,13 +12,15 @@ namespace WiseControl.Domain.Interfaces
 
         Task<IEnumerable<Account>> GetAccountsAsync();
 
-        Task<Account> GetByIdAsync(int? id);
+        Task<Account> GetByIdAsync(long? id);
         
         Task<Account> CreateAsync(Account account);
         
         Task<Account> UpdateAsync(Account account);
         
         Task<Account> RemoveAsync(Account account);
+
+        
 
     }
 }

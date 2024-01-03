@@ -2,7 +2,7 @@
 {
     public class AccountDTO
     {
-        public int AccountId { get; set; }
+        public long AccountId { get; set; }
 
 
         //public TransactionType Type { get; set; }

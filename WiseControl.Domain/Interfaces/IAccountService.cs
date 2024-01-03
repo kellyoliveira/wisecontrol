@@ -11,13 +11,13 @@ namespace WiseControl.Domain.Interfaces
     {
 
         Task<IEnumerable<AccountDTO>> GetAccounts();
-        Task<AccountDTO> GetById(int? id);
+        Task<AccountDTO> GetById(long? id);
 
         //Task<ProductDTO> GetProductCategory(int? id);
         Task Add(AccountDTO accountDto);
         Task Update(AccountDTO accountDto);
 
-        Task Remove(int? id);
+        Task Remove(long? id);
 
     }
 }

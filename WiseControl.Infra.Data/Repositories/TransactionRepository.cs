@@ -30,8 +30,13 @@ namespace WiseControl.Infra.Data.Repositories
 
         }
 
+
         public async Task<Transaction> CreateAsync(Transaction transaction)
         {
+
+            var count = _transactions.CountDocuments(transaction => true);
+
+            transaction.TransactionId = count + 1;
 
             await _transactions.InsertOneAsync(transaction);
 
@@ -48,6 +53,8 @@ namespace WiseControl.Infra.Data.Repositories
 
         }
 
+
+
         public async Task<Transaction> UpdateAsync(Transaction transaction)
         {
             var result = await _transactions.ReplaceOneAsync(transactionDB => transactionDB.TransactionId == transaction.TransactionId, transaction);
@@ -55,7 +62,7 @@ namespace WiseControl.Infra.Data.Repositories
             return transaction;
         }
 
-        public async Task<Transaction> GetByIdAsync(int? id)
+        public async Task<Transaction> GetByIdAsync(long? id)
         {
 
             var result = await _transactions.FindAsync<Transaction>(transaction => transaction.TransactionId == id);

@@ -32,7 +32,7 @@ namespace WiseControl.Application.Services
 
         }
 
-        public async Task<AccountDTO> GetById(int? id)
+        public async Task<AccountDTO> GetById(long? id)
         {
             var accountEntity = await _accountRepository.GetByIdAsync(id);
 
@@ -57,7 +57,7 @@ namespace WiseControl.Application.Services
             await _accountRepository.UpdateAsync(accountEntity);
         }
 
-        public async Task Remove(int? id)
+        public async Task Remove(long? id)
         {
             var accountEntity = _accountRepository.GetByIdAsync(id).Result;
             await _accountRepository.RemoveAsync(accountEntity);
