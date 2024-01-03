@@ -36,17 +36,35 @@ export class CreditRegisterPage  {
   }
 
 
+  
   registerCredit() {
     
+    /*if (!this.validateDataStudy()) {
+      return;
+    }
+  
+    if (!this.studyForm.valid) {
+      return;
+    }*/
+
+    this.transaction.description = "Credit Teste";
+
+    console.log(this.transaction);
+
+    this.saveTransactionCredit();
   }
 
-  saveTransaction() {
+
+  saveTransactionCredit() {
+
+
+    alert("saveTransactionCredit");
 
     this.errorMessage = '';
     this.messageService.blockUI();
     this.messageService.isLoadingData = true;
 
-    this.transactionService.createTransaction(this.transaction).subscribe(
+    this.transactionService.createTransactionCredit(this.transaction).subscribe(
       p => {
       
         this.messageService.isLoadingData = false;
@@ -70,4 +88,5 @@ export class CreditRegisterPage  {
     );
   }
 
+  
 }

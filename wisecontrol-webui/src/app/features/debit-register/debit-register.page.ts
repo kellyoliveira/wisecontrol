@@ -15,10 +15,7 @@ export class DebitRegisterPage  {
   hasResult: boolean = false;
   protected transaction: Transaction = new Transaction();
   errorMessage: string = "";
-  
-  registerDebit() {
-    
-  }
+
 
   constructor(
     private zone: NgZone,
@@ -37,13 +34,35 @@ export class DebitRegisterPage  {
    
   }
 
-  saveTransaction() {
+  
+  registerDebit() {
+    
+    /*if (!this.validateDataStudy()) {
+      return;
+    }
+  
+    if (!this.studyForm.valid) {
+      return;
+    }*/
+
+    this.transaction.description = "Conta Teste";
+
+    console.log(this.transaction);
+
+    this.saveTransactionDebit();
+  }
+
+
+  saveTransactionDebit() {
+
+
+    alert("saveTransactionDebit");
 
     this.errorMessage = '';
     this.messageService.blockUI();
     this.messageService.isLoadingData = true;
 
-    this.transactionService.createTransaction(this.transaction).subscribe(
+    this.transactionService.createTransactionDebit(this.transaction).subscribe(
       p => {
       
         this.messageService.isLoadingData = false;
@@ -66,5 +85,7 @@ export class DebitRegisterPage  {
       }
     );
   }
+
+
 
 }

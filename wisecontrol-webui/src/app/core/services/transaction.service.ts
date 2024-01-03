@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { Transaction } from '../view-models/transaction';
+import { Transaction, TransactionType } from '../view-models/transaction';
 import { BaseService } from './base.service';
 import { Router } from '@angular/router';
 import { MessageService } from './message.service';
@@ -40,14 +40,6 @@ export class TransactionService extends BaseService {
     );
   }
 
-  public saveTransaction(transaction: Transaction): Observable<Transaction> {
-    if (transaction.transactionId) {
-      return this.updateTransaction(transaction);
-    }
-    return this.createTransaction(transaction);
-  }
-
-  
 
   public deleteTransaction(transaction: Transaction) {
     let urlService : string = environment.SERVER_HOST + '/api/transactions/' + transaction.transactionId;
@@ -56,7 +48,16 @@ export class TransactionService extends BaseService {
   }
 
   
-  public createTransaction(transaction: Transaction, shouldSetProfile : boolean = true): Observable<Transaction> {
+  public createTransactionDebit(transaction: Transaction): Observable<Transaction> {
+    transaction.transactionType = TransactionType.Debit;
+
+    return this.http.post<Transaction>(environment.SERVER_HOST + '/api/transactions/', transaction, this.httpOptions);
+  }
+
+
+  public createTransactionCredit(transaction: Transaction): Observable<Transaction> {
+    transaction.transactionType = TransactionType.Credit;
+    
     return this.http.post<Transaction>(environment.SERVER_HOST + '/api/transactions/', transaction, this.httpOptions);
   }
 

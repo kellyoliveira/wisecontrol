@@ -38,10 +38,29 @@ export class AccountRegisterPage  {
 
   registerAccount() {
 
-    
+    /*if (!this.validateDataStudy()) {
+      return;
+    }
+  
+    if (!this.studyForm.valid) {
+      return;
+    }*/
+
+    this.account.description = "Conta Teste";
+    this.account.owner = "kelly.oliveira";
+
+    console.log(this.account);
+
+    this.saveAccount();
   }
 
+
+  
+
   saveAccount() {
+
+
+    alert("saveAccount");
 
     this.errorMessage = '';
     this.messageService.blockUI();

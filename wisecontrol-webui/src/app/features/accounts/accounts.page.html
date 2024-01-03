@@ -12,7 +12,6 @@
 
 <div id="appCapsule">
     <div class="section mt-2" *ngFor="let account of accounts">
-
         <!-- card block -->
         <div class="card-block mb-2">
             <div class="card-main">
@@ -42,7 +41,7 @@
                     <div class="bottom">
                         <div class="card-expiry">
                             <span class="label">Código Identificador</span>
-                            553
+                            {{account.accountId}}
                         </div>
                        
                     </div>
@@ -50,6 +49,6 @@
             </div>
         </div>
         <!-- * card block -->
+        
     </div>
-    
 </div>

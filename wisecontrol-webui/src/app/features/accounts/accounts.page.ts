@@ -32,12 +32,12 @@ export class AccountsPage  {
 
   ngOnInit() {
    
-    this.loadTransactions();
+    this.loadAccounts();
     
   }
 
 
-  private loadTransactions() {
+  private loadAccounts() {
 
     this.messageService.isLoadingData = true;
     
@@ -47,19 +47,17 @@ export class AccountsPage  {
     this.accountService.getAccounts(c => { this.totalCount = c; }).subscribe(a => {
 
       this.messageService.isLoadingData = false;
+
+      alert(JSON.stringify(a));
     
       this.accounts = a;     
 
       this.hasResult = true;
       this.success = true;
 
-    
+      console.log(JSON.stringify(a));
       
     });
   }
 
-
-  itemAction(content: Account) {
-      this.router.navigate(['../transaction-detail/' + content.accountId ]);
-  }
 }

@@ -56,7 +56,9 @@ export class AccountService extends BaseService {
   }
 
   
-  public createAccount(account: Account, shouldSetProfile : boolean = true): Observable<Account> {
+  public createAccount(account: Account): Observable<Account> {
+    
+    alert(account.description);
     return this.http.post<Account>(environment.SERVER_HOST + '/api/accounts/', account, this.httpOptions);
   }
 

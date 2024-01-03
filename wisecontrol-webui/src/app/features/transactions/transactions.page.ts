@@ -60,8 +60,6 @@ export class TransactionsPage  {
 
 
   itemAction(content: Transaction) {
-
-    content.transactionId = '1';
     
     this.router.navigate(['../transaction-detail/' + content.transactionId ]);
 
