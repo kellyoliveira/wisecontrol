@@ -25,35 +25,18 @@ namespace WiseControl.Application.Services
         public async Task<IEnumerable<TransactionDTO>> GetTransactions()
         {
 
-            var transactionsEntities = await _transactionRepository.GetTransactionsAsync();
-
-            List<TransactionDTO> transactionsDTos = new List<TransactionDTO>();
+            var transactionEntities = await _transactionRepository.GetTransactionsAsync();
 
 
-            foreach (var transaction in transactionsEntities) {
-                transactionsDTos.Add(new TransactionDTO() { Description = transaction.Description, TransactionId = transaction.TransactionId });
-
-            }
-
-
-            //return _mapper.Map<IEnumerable<TransactionDTO>>(transactionsEntities);
-
-            return transactionsDTos;
+            return _mapper.Map<IEnumerable<TransactionDTO>>(transactionEntities);
 
         }
 
         public async Task<TransactionDTO> GetById(int? id)
         {
-            //var transactionEntity = await _transactionRepository.GetByIdAsync(id);
+            var transactionEntity = await _transactionRepository.GetByIdAsync(id);
 
-            //return _mapper.Map<TransactionDTO>(transactionEntity);
-
-            //var transactionEntity = new TransactionDTO() { Description = "Lançamento", Date = System.DateTime.Now, Id = 1, Value = 100 };
-
-
-            var transactionEntity = new TransactionDTO() { Description = "Lançamento", TransactionId = 1 };
-
-            return transactionEntity;
+            return _mapper.Map<TransactionDTO>(transactionEntity);
         }
 
 
@@ -78,6 +61,14 @@ namespace WiseControl.Application.Services
         public async Task Update(TransactionDTO transactionDto)
         {
             var transactionEntity = _mapper.Map<Transaction>(transactionDto);
+
+
+            var oldTransactionEntity = await _transactionRepository.GetByIdAsync(transactionEntity.TransactionId);
+
+            transactionEntity.TransactionUId = oldTransactionEntity.TransactionUId;
+
+            
+
             await _transactionRepository.UpdateAsync(transactionEntity);
         }
 

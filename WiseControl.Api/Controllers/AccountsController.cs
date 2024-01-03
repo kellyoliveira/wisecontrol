@@ -21,12 +21,12 @@ namespace WiseControl.Api.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<AccountDTO>>> Get()
         {
-            var transactions = await _accountService.GetAccounts();
-            if (transactions == null)
+            var accounts = await _accountService.GetAccounts();
+            if (accounts == null)
             {
                 return NotFound("Accounts not found");
             }
-            return Ok(transactions);
+            return Ok(accounts);
         }
 
         [HttpGet("{id}", Name = "GetAccount")]

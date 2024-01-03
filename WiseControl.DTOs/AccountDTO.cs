@@ -7,14 +7,11 @@
 
         //public TransactionType Type { get; set; }
         public String Description { get; set; }
-        //public DateTimeOffset Date { get; set; }
-        //public decimal Value { get; set; }
+
+        public decimal Balance { get; set; }
 
 
-        /*public enum TransactionType
-        {
-            Income,
-            Expense
-        }*/
+        public string Owner { get; set; }
+
     }
 }

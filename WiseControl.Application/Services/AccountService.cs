@@ -25,34 +25,19 @@ namespace WiseControl.Application.Services
         public async Task<IEnumerable<AccountDTO>> GetAccounts()
         {
 
-            List<AccountDTO> accountsDTos = new List<AccountDTO>();
+            var accountEntities = await _accountRepository.GetAccountsAsync();
 
-            //transactionsDTos.Add(new TransactionDTO() { Description = "Lançamento", Date = System.DateTime.Now, Id = 1, Value = 100 });
-
-            accountsDTos.Add(new AccountDTO() { Description = "Lançamento", AccountId = 1});
-
-
-            return accountsDTos;
-
-            //var transactionsEntities = await _transactionRepository.GetTransactionsAsync();
-
-
-            //return _mapper.Map<IEnumerable<TransactionDTO>>(transactionsEntities);
+      
+            return _mapper.Map<IEnumerable<AccountDTO>>(accountEntities);
 
         }
 
         public async Task<AccountDTO> GetById(int? id)
         {
-            //var transactionEntity = await _transactionRepository.GetByIdAsync(id);
+            var accountEntity = await _accountRepository.GetByIdAsync(id);
 
-            //return _mapper.Map<TransactionDTO>(transactionEntity);
+            return _mapper.Map<AccountDTO>(accountEntity);
 
-            //var transactionEntity = new TransactionDTO() { Description = "Lançamento", Date = System.DateTime.Now, Id = 1, Value = 100 };
-
-
-            var accountEntity = new AccountDTO() { Description = "Conta Padrão", AccountId = 1 };
-
-            return accountEntity;
         }
 
         public async Task Add(AccountDTO accountDto)
@@ -64,6 +49,11 @@ namespace WiseControl.Application.Services
         public async Task Update(AccountDTO accountDto)
         {
             var accountEntity = _mapper.Map<Account>(accountDto);
+
+            var oldAccountEntity = await _accountRepository.GetByIdAsync(accountEntity.AccountId);
+
+            accountEntity.AccountUId = oldAccountEntity.AccountUId;
+
             await _accountRepository.UpdateAsync(accountEntity);
         }
 
