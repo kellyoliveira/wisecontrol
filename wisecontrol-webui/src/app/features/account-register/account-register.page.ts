@@ -3,6 +3,7 @@ import { Account } from "../../core/view-models/account";
 import { MessageService } from "../../core/services/message.service";
 import { AccountService } from "../../core/services/account.service";
 import { ActivatedRoute, Router } from "@angular/router";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
 
 @Component({
   selector: 'app-account-register',
@@ -11,6 +12,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 })
 export class AccountRegisterPage  {
 
+  accountForm!: FormGroup;
   success: boolean = false;
   hasResult: boolean = false;
   errorMessage: string = "";
@@ -28,25 +30,36 @@ export class AccountRegisterPage  {
     this.success = false;
     this.hasResult = false;
     
+    this.buildForm();
   }
 
   ngOnInit() {
-   
     
   }
 
+  private buildForm() {
+    this.accountForm = new FormGroup({
+        description: new FormControl('', [Validators.required])
+    });
+  }
+
+  private validateDataAccount() : boolean {
+    if (!this.accountForm.valid) {
+      return false;
+    }
+    
+    return true;
+
+  }
 
   registerAccount() {
 
-    /*if (!this.validateDataStudy()) {
+    if (!this.validateDataAccount()) {
       return;
     }
   
-    if (!this.studyForm.valid) {
-      return;
-    }*/
-
-    this.account.description = "Conta Teste";
+    
+    this.account.description = this.accountForm.get('description')?.value;
     this.account.owner = "kelly.oliveira";
 
     console.log(this.account);

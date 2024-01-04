@@ -3,6 +3,7 @@ import { Transaction } from "../../core/view-models/transaction";
 import { MessageService } from "../../core/services/message.service";
 import { TransactionService } from "../../core/services/transaction.service";
 import { ActivatedRoute, Router } from "@angular/router";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
 
 @Component({
   selector: 'app-debit-register',
@@ -11,6 +12,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 })
 export class DebitRegisterPage  {
 
+  debitForm!: FormGroup;
   success: boolean = false;
   hasResult: boolean = false;
   protected transaction: Transaction = new Transaction();
@@ -25,7 +27,8 @@ export class DebitRegisterPage  {
     private transactionService: TransactionService
   ) { 
 
-    
+    this.buildForm();
+   
     this.success = false;
     this.hasResult = false;
   }
@@ -34,18 +37,27 @@ export class DebitRegisterPage  {
    
   }
 
+  private buildForm() {
+    this.debitForm = new FormGroup({
+        description: new FormControl('', [Validators.required])
+    });
+  }
   
+  private validateDataDebit() : boolean {
+    if (!this.debitForm.valid) {
+      return false;
+    }
+
+    return true;
+  }
+
   registerDebit() {
     
-    /*if (!this.validateDataStudy()) {
+    if (!this.validateDataDebit()) {
       return;
     }
-  
-    if (!this.studyForm.valid) {
-      return;
-    }*/
 
-    this.transaction.description = "Conta Teste";
+    this.transaction.description = this.debitForm.get('description')?.value;
 
     console.log(this.transaction);
 

@@ -16,9 +16,7 @@
         <form action="index.html">
             <div class="card">
                 <div class="card-body">
-                    
-
-                    <form>
+                    <form [formGroup]="creditForm">
                         <div class="form-group basic">
                             <div class="input-wrapper">
                                 <label class="label" for="account2d">From</label>
@@ -32,8 +30,8 @@
 
                         <div class="form-group basic">
                             <div class="input-wrapper">
-                                <label class="label" for="text11d">Descrição</label>
-                                <input type="email" class="form-control" id="text11d" placeholder="Descrição">
+                                <label class="label" for="description">Descrição</label>
+                                <input type="text" formControlName="description" class="form-control" id="description" placeholder="Descrição">
                                 <i class="clear-input">
                                     <i icon name="close-circle"></i>
                                 </i>
