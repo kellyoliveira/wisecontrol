@@ -42,6 +42,9 @@ namespace WiseControl.Application.Services
         public async Task Add(TransactionDTO transactionDto)
         {
             var transactionEntity = _mapper.Map<Transaction>(transactionDto);
+
+            transactionEntity.Date = System.DateTime.Now;
+
             await _transactionRepository.CreateAsync(transactionEntity);
         }
 

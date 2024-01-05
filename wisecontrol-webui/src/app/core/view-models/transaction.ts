@@ -2,8 +2,8 @@ export class Transaction {
 
     public transactionId : Number = 0;
     public description : string = '';
-
-    public transactionType: TransactionType = TransactionType.None;
+    public value: Number = 0;
+    public type: TransactionType = TransactionType.None;
 
 }
 

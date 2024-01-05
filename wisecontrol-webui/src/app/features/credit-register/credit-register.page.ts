@@ -39,7 +39,8 @@ export class CreditRegisterPage  {
 
   private buildForm() {
     this.creditForm = new FormGroup({
-        description: new FormControl('', [Validators.required])
+        description: new FormControl('', [Validators.required]),
+        value: new FormControl('', [Validators.required])
     });
   }
 
@@ -59,6 +60,7 @@ export class CreditRegisterPage  {
   
 
     this.transaction.description = this.creditForm.get('description')?.value;
+    this.transaction.value = Number(this.creditForm.get('value')?.value);
 
     console.log(this.transaction);
 

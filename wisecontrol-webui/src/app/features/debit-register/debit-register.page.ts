@@ -39,7 +39,8 @@ export class DebitRegisterPage  {
 
   private buildForm() {
     this.debitForm = new FormGroup({
-        description: new FormControl('', [Validators.required])
+        description: new FormControl('', [Validators.required]),
+        value: new FormControl('', [Validators.required])
     });
   }
   
@@ -58,6 +59,7 @@ export class DebitRegisterPage  {
     }
 
     this.transaction.description = this.debitForm.get('description')?.value;
+    this.transaction.value = this.debitForm.get('value')?.value;
 
     console.log(this.transaction);
 

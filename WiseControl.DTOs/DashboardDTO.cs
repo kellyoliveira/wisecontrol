@@ -11,9 +11,9 @@ namespace WiseControl.DTOs
             this.Transactions = transactions;
             this.Accounts = accounts;
 
-            this.TotalCredit = transactions.Sum(c => c.Value);
+            this.TotalCredit = transactions.Where(p => p.Type == TransactionDTO.TransactionType.Credit).Sum(c => c.Value);
 
-            this.TotalDebit = transactions.Sum(c => c.Value);
+            this.TotalDebit = transactions.Where(p => p.Type == TransactionDTO.TransactionType.Debit).Sum(c => c.Value);
 
         }
 

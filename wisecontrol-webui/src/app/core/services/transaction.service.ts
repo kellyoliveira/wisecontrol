@@ -42,14 +42,14 @@ export class TransactionService extends BaseService {
 
   
   public createTransactionDebit(transaction: Transaction): Observable<Transaction> {
-    transaction.transactionType = TransactionType.Debit;
+    transaction.type = TransactionType.Debit;
 
     return this.http.post<Transaction>(environment.SERVER_HOST + '/api/transactions/', transaction, this.httpOptions);
   }
 
 
   public createTransactionCredit(transaction: Transaction): Observable<Transaction> {
-    transaction.transactionType = TransactionType.Credit;
+    transaction.type = TransactionType.Credit;
     
     return this.http.post<Transaction>(environment.SERVER_HOST + '/api/transactions/', transaction, this.httpOptions);
   }

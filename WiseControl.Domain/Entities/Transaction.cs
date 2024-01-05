@@ -27,8 +27,9 @@ namespace WiseControl.Domain.Entities
 
         public enum TransactionType
         {
-            Income,
-            Expense
+            Credit = 1,
+            Debit = 2,
+            None = 3
         }
     }
 }
