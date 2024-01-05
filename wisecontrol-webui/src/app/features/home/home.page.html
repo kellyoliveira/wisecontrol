@@ -131,21 +131,17 @@
                             </div>
                             <div class="balance">
                                 <span class="label">Saldo</span>
-                                <h1 class="title">R$ 1.256,90</h1>
+                                <h1 class="title">R$ {{account.balance}}</h1>
                             </div>
                             <div class="in">
                                 <div class="card-number">
-                                    <span class="label">Card Number</span>
+                                    <span class="label">Conta</span>
                                     {{account.description}}
                                 </div>
                                 <div class="bottom">
                                     <div class="card-expiry">
-                                        <span class="label">Expiry</span>
-                                        12 / 25
-                                    </div>
-                                    <div class="card-ccv">
-                                        <span class="label">CCV</span>
-                                        553
+                                        <span class="label">Código Identificador</span>
+                                        {{account.accountId}}
                                     </div>
                                 </div>
                             </div>

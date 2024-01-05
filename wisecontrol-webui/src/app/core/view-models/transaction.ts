@@ -5,6 +5,7 @@ export class Transaction {
     public value: Number = 0;
     public type: TransactionType = TransactionType.None;
 
+
 }
 
 
