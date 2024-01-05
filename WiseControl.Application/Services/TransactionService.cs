@@ -32,6 +32,17 @@ namespace WiseControl.Application.Services
 
         }
 
+        public async Task<IEnumerable<TransactionDTO>> GetTransactionsByAccount(long accountId)
+        {
+
+            var transactionEntities = await _transactionRepository.GetTransactionsByAccountAsync(accountId);
+
+
+            return _mapper.Map<IEnumerable<TransactionDTO>>(transactionEntities);
+
+        }
+
+
         public async Task<TransactionDTO> GetById(long? id)
         {
             var transactionEntity = await _transactionRepository.GetByIdAsync(id);

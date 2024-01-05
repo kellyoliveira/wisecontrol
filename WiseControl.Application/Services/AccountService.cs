@@ -28,7 +28,7 @@ namespace WiseControl.Application.Services
             var accountEntities = await _accountRepository.GetAccountsAsync();
 
       
-            return _mapper.Map<IEnumerable<AccountDTO>>(accountEntities);
+            return _mapper.Map<IEnumerable<AccountDTO>>(accountEntities).OrderByDescending(p => p.AccountId);
 
         }
 
@@ -59,10 +59,23 @@ namespace WiseControl.Application.Services
 
         public async Task Remove(long? id)
         {
-            var accountEntity = _accountRepository.GetByIdAsync(id).Result;
+            var accountEntity = await _accountRepository.GetByIdAsync(id);
             await _accountRepository.RemoveAsync(accountEntity);
         }
 
+
+        public async Task RefreshBalance(long id, TransactionDTO[] transactions) {
+            var accountEntity = await _accountRepository.GetByIdAsync(id);
+
+            var totalCredit = transactions.Where(p => p.Type == TransactionDTO.TransactionType.Credit && p.AccountId == id).Sum(c => c.Value);
+
+            var totalDebit = transactions.Where(p => p.Type == TransactionDTO.TransactionType.Debit && p.AccountId == id).Sum(c => c.Value);
+
+            accountEntity.Balance = totalCredit - totalDebit;
+
+            await _accountRepository.UpdateAsync(accountEntity);
+
+        }
 
     }
 }

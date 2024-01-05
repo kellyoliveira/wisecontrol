@@ -12,6 +12,7 @@ using WiseControl.Domain.Settings;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using Transaction = WiseControl.Domain.Entities.Transaction;
 using Microsoft.Extensions.Options;
+using WiseControl.DTOs;
 
 namespace WiseControl.Infra.Data.Repositories
 {
@@ -78,6 +79,12 @@ namespace WiseControl.Infra.Data.Repositories
             return result.ToEnumerable<Transaction>();
 
 
+        }
+
+        public async Task<IEnumerable<Transaction>> GetTransactionsByAccountAsync(long accountId) {
+            var result = await _transactions.FindAsync(transaction => transaction.AccountId == accountId);
+
+            return result.ToEnumerable<Transaction>();
         }
 
 

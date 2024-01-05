@@ -11,6 +11,9 @@ namespace WiseControl.Domain.Interfaces
     {
 
         Task<IEnumerable<TransactionDTO>> GetTransactions();
+
+        Task<IEnumerable<TransactionDTO>> GetTransactionsByAccount(long accountId);
+
         Task<TransactionDTO> GetById(long? id);
 
         //Task<ProductDTO> GetProductCategory(int? id);

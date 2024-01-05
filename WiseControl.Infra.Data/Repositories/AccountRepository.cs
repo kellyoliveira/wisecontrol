@@ -66,7 +66,7 @@ namespace WiseControl.Infra.Data.Repositories
         {
             var result = await _accounts.FindAsync(account => true);
 
-            return result.ToList<Account>();
+            return result.ToList<Account>().OrderByDescending(p => p.AccountId);
 
 
         }

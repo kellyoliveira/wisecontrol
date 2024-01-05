@@ -13,11 +13,13 @@ namespace WiseControl.Api.Controllers
         
         private readonly ILogger<TransactionsController> _logger;
         private readonly ITransactionService _transactionService;
+        private readonly IAccountService _accountService;
 
-        public TransactionsController(ILogger<TransactionsController> logger, ITransactionService transactionService)
+        public TransactionsController(ILogger<TransactionsController> logger, ITransactionService transactionService, IAccountService accountService)
         {
             _logger = logger;
             _transactionService = transactionService;
+            _accountService = accountService;
         }
 
 
@@ -52,6 +54,11 @@ namespace WiseControl.Api.Controllers
 
             await _transactionService.Add(transactionDTO);
 
+            var accountTransactions = await _transactionService.GetTransactionsByAccount(transactionDTO.AccountId);
+
+            await _accountService.RefreshBalance(transactionDTO.AccountId, accountTransactions.ToArray());
+
+
             return new CreatedAtRouteResult("GetTransaction",
                 new { id = transactionDTO.TransactionId }, transactionDTO);
         }
@@ -69,6 +76,11 @@ namespace WiseControl.Api.Controllers
 
             await _transactionService.Update(transactionDTO);
 
+
+            var accountTransactions = await _transactionService.GetTransactionsByAccount(transactionDTO.AccountId);
+
+            await _accountService.RefreshBalance(transactionDTO.AccountId, accountTransactions.ToArray());
+
             return Ok(transactionDTO);
         }
 
@@ -83,6 +95,11 @@ namespace WiseControl.Api.Controllers
             }
 
             await _transactionService.Remove(id);
+
+
+            var accountTransactions = await _transactionService.GetTransactionsByAccount(transactionDTO.AccountId);
+
+            await _accountService.RefreshBalance(transactionDTO.AccountId, accountTransactions.ToArray());
 
             return Ok(transactionDTO);
         }

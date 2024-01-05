@@ -19,5 +19,6 @@ namespace WiseControl.Domain.Interfaces
 
         Task Remove(long? id);
 
+        Task RefreshBalance(long id, TransactionDTO[] transactions);
     }
 }
