@@ -15,7 +15,10 @@ namespace WiseControl.Domain.Entities
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public String TransactionUId { get; set; }
-       
+
+
+        public long AccountId { get; set; }
+
         public long TransactionId { get; set; }
         
         

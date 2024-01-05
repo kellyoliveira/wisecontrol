@@ -4,6 +4,9 @@ import { MessageService } from "../../core/services/message.service";
 import { TransactionService } from "../../core/services/transaction.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { List } from "../../core/view-models/list";
+import { Account } from "../../core/view-models/account";
+import { AccountService } from "../../core/services/account.service";
 
 @Component({
   selector: 'app-debit-register',
@@ -17,13 +20,14 @@ export class DebitRegisterPage  {
   hasResult: boolean = false;
   protected transaction: Transaction = new Transaction();
   errorMessage: string = "";
-
+  public accounts: List<Account> = new List<Account>();
 
   constructor(
     private zone: NgZone,
     private router: Router,
     private route: ActivatedRoute,
     private messageService: MessageService,
+    private accountService: AccountService,
     private transactionService: TransactionService
   ) { 
 
@@ -34,11 +38,37 @@ export class DebitRegisterPage  {
   }
 
   ngOnInit() {
-   
+    this.loadAccounts();
   }
+
+  private loadAccounts() {
+
+    this.messageService.isLoadingData = true;
+    
+    this.accounts.hasResult = false;
+    this.accounts.success = false;////////////////
+
+    
+    this.accountService.getAccounts().subscribe(c => {
+
+      this.messageService.isLoadingData = false;
+
+      console.log(JSON.stringify(c));
+    
+      this.accounts = c;  
+
+      this.accounts.hasResult = true;
+      this.accounts.success = true;
+
+      console.log(JSON.stringify(c));
+      
+    });
+  }
+
 
   private buildForm() {
     this.debitForm = new FormGroup({
+        accountId: new FormControl('', [Validators.required]),
         description: new FormControl('', [Validators.required]),
         value: new FormControl('', [Validators.required])
     });
@@ -60,6 +90,8 @@ export class DebitRegisterPage  {
 
     this.transaction.description = this.debitForm.get('description')?.value;
     this.transaction.value = this.debitForm.get('value')?.value;
+    this.transaction.accountId = Number(this.debitForm.get('accountId')?.value);
+    
 
     console.log(this.transaction);
 

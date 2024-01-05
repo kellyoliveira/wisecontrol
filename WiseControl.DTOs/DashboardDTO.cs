@@ -22,9 +22,9 @@ namespace WiseControl.DTOs
         public decimal TotalDebit { get; private set; }
         public decimal TotalCredit { get; private set; }
 
-        public string TotalBalanceDescription { get { return TotalBalance.ToString("N"); } }
-        public string TotalDebitDescription { get { return TotalDebit.ToString("N"); } }
-        public string TotalCreditDescription { get { return TotalCredit.ToString("N"); } }
+        public string TotalBalanceDescription { get { return TotalBalance.ToString("N2"); } }
+        public string TotalDebitDescription { get { return TotalDebit.ToString("N2"); } }
+        public string TotalCreditDescription { get { return TotalCredit.ToString("N2"); } }
 
         
         public TransactionDTO[] Transactions {

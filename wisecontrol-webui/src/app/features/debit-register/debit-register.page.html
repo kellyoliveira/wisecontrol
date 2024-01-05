@@ -18,11 +18,13 @@
                     <form [formGroup]="debitForm">
                         <div class="form-group basic">
                             <div class="input-wrapper">
-                                <label class="label" for="account2d">From</label>
-                                <select class="form-control custom-select" id="account2d">
-                                    <option value="0">Savings (*** 5019)</option>
-                                    <option value="1">Investment (*** 6212)</option>
-                                    <option value="2">Mortgage (*** 5021)</option>
+                                <label class="label" for="account2d">Conta</label>
+                                <select class="form-control custom-select" id="account2d" formControlName="accountId">
+                                    <option value="">Informe a conta</option>
+                                    <option *ngFor="let account of accounts.results"  value="{{account.accountId}}">
+                                        {{account.description}}
+                                    </option>
+                                    
                                 </select>
                             </div>
                         </div>

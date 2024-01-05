@@ -56,7 +56,3 @@ export class AccountsPage  {
   }
 
 }
-function foreach() {
-  throw new Error("Function not implemented.");
-}
-
