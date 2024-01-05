@@ -108,17 +108,16 @@ export class DebitRegisterPage  {
     this.messageService.blockUI();
     this.messageService.isLoadingData = true;
 
-    this.transactionService.createTransactionDebit(this.transaction).subscribe(
-      p => {
-      
+    this.transactionService.createTransactionDebit(this.transaction).subscribe({
+      next:(r) => {
         this.messageService.isLoadingData = false;
         this.success = true;
         
-        this.transaction.transactionId = p.transactionId;
+        this.transaction.transactionId = r.transactionId;
 
+        this.router.navigate(['/transaction-succeed']);
       },
-      err => {
-
+      error:(err) => {
         alert(JSON.stringify(err));
 
         this.messageService.isLoadingData = false;
@@ -128,8 +127,10 @@ export class DebitRegisterPage  {
         this.errorMessage = err.error.message;
 
         alert(this.errorMessage);
+
       }
-    );
+    });
+     
   }
 
 

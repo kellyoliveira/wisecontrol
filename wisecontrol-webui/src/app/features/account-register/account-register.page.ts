@@ -73,23 +73,22 @@ export class AccountRegisterPage  {
   saveAccount() {
 
 
-    alert("saveAccount");
 
     this.errorMessage = '';
     this.messageService.blockUI();
     this.messageService.isLoadingData = true;
 
-    this.accountService.createAccount(this.account).subscribe(
-      p => {
-      
+    this.accountService.createAccount(this.account).subscribe({
+      next:(r) => {
         this.messageService.isLoadingData = false;
         this.success = true;
         
-        this.account.accountId = p.accountId;
+        this.account.accountId = r.accountId;
+
+        this.router.navigate(['/accounts']);
 
       },
-      err => {
-
+      error:(err) => {
         alert(JSON.stringify(err));
 
         this.messageService.isLoadingData = false;
@@ -100,7 +99,9 @@ export class AccountRegisterPage  {
 
         alert(this.errorMessage);
       }
-    );
+
+    });
+    
   }
   
 }

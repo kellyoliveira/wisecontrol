@@ -51,5 +51,12 @@ export const routes: Routes = [
         title: 'Nova Conta',
       },
       loadChildren: () => import('./features/debit-register/debit-register.module').then(m => m.DebitRegisterPageModule)
-    } 
+    },
+    {
+      path: 'transaction-succeed',
+      data: {
+        title: 'Registro de Transação',
+      },
+      loadChildren: () => import('./features/transaction-succeed/transaction-succeed.module').then(m => m.TransactionSucceedPageModule)
+  }, 
 ];

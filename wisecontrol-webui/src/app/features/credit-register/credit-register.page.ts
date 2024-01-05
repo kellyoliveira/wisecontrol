@@ -101,24 +101,23 @@ export class CreditRegisterPage  {
 
   saveTransactionCredit() {
 
-
-    alert("saveTransactionCredit");
-
     this.errorMessage = '';
     this.messageService.blockUI();
     this.messageService.isLoadingData = true;
 
-    this.transactionService.createTransactionCredit(this.transaction).subscribe(
-      p => {
+    this.transactionService.createTransactionCredit(this.transaction).subscribe({
+      next:(r) => {
       
         this.messageService.isLoadingData = false;
         this.success = true;
         
-        this.transaction.transactionId = p.transactionId;
+        this.transaction.transactionId = r.transactionId;
+
+        this.router.navigate(['/transaction-succeed']);
 
       },
-      err => {
-
+      error:(err) => {
+       
         alert(JSON.stringify(err));
 
         this.messageService.isLoadingData = false;
@@ -129,7 +128,7 @@ export class CreditRegisterPage  {
 
         alert(this.errorMessage);
       }
-    );
+    });
   }
 
   
