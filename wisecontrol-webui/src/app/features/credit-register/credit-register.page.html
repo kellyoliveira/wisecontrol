@@ -50,7 +50,8 @@
 
                         <div class="form-group basic">
                             <button type="button" class="btn btn-primary btn-block btn-lg"
-                                data-bs-dismiss="modal" (click)="registerCredit()">Enviar</button>
+                             (click)="registerCredit()"
+                             [ngClass]="{'disabled-button' : (creditForm.invalid || messageService.isLoadingData)}">Enviar</button>
                         </div>
                     </form>
                 </div>

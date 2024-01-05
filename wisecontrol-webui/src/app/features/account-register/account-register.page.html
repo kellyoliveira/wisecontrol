@@ -29,7 +29,7 @@
     
                         <div class="form-group basic">
                             <button type="button" class="btn btn-primary btn-block btn-lg"
-                            (click)="registerAccount()">Enviar</button>
+                            (click)="registerAccount()" [ngClass]="{'disabled-button' : (accountForm.invalid || messageService.isLoadingData)}">Enviar</button>
                         </div>
                     </form>
                 </div>

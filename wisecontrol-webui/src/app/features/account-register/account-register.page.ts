@@ -22,7 +22,7 @@ export class AccountRegisterPage  {
     private zone: NgZone,
     private router: Router,
     private route: ActivatedRoute,
-    private messageService: MessageService,
+    protected messageService: MessageService,
     private accountService: AccountService
   ) { 
 

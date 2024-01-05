@@ -26,7 +26,7 @@ export class DebitRegisterPage  {
     private zone: NgZone,
     private router: Router,
     private route: ActivatedRoute,
-    private messageService: MessageService,
+    protected messageService: MessageService,
     private accountService: AccountService,
     private transactionService: TransactionService
   ) { 
@@ -100,9 +100,6 @@ export class DebitRegisterPage  {
 
 
   saveTransactionDebit() {
-
-
-    alert("saveTransactionDebit");
 
     this.errorMessage = '';
     this.messageService.blockUI();

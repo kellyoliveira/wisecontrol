@@ -26,7 +26,7 @@ export class CreditRegisterPage  {
     private zone: NgZone,
     private router: Router,
     private route: ActivatedRoute,
-    private messageService: MessageService,
+    protected messageService: MessageService,
     private transactionService: TransactionService,
     private accountService: AccountService
   ) { 
