@@ -58,5 +58,19 @@ export const routes: Routes = [
         title: 'Registro de Transação',
       },
       loadChildren: () => import('./features/transaction-succeed/transaction-succeed.module').then(m => m.TransactionSucceedPageModule)
-  }, 
-];
+    }, 
+    {
+      path: 'login',
+      data: {
+        title: 'Autenticação de Usuário',
+      },
+      loadChildren: () => import('./features/login/login.module').then(m => m.LoginPageModule)
+    }, 
+    {
+      path: 'user-register',
+      data: {
+        title: 'Registro de Usuário',
+      },
+      loadChildren: () => import('./features/user-register/user-register.module').then(m => m.UserRegisterPageModule)
+    }, 
+  ];
