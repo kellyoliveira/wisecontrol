@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WiseControl.DTOs;
 
-namespace WiseControl.Domain.Interfaces
+namespace WiseControl.Domain.Interfaces.Services
 {
     public interface IAccountService
     {

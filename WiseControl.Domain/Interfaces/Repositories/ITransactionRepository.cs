@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using WiseControl.Domain.Entities;
 using WiseControl.DTOs;
 
-namespace WiseControl.Domain.Interfaces
+namespace WiseControl.Domain.Interfaces.Repositories
 {
     public interface ITransactionRepository
     {

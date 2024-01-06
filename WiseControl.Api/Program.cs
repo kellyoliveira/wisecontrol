@@ -18,6 +18,7 @@ builder.Services.Configure<WiseControlDatabaseSettings>(builder.Configuration.Ge
 
 
 builder.Services.AddInfrastructure();
+builder.Services.AddInfrastructureJWT(builder.Configuration);
 
 var app = builder.Build();
 

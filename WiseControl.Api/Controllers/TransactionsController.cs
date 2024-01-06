@@ -1,8 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using WiseControl.DTOs;
-using WiseControl.Domain.Interfaces;
 using WiseControl.Application.Services;
-
+using WiseControl.Domain.Interfaces.Services;
 
 namespace WiseControl.Api.Controllers
 {

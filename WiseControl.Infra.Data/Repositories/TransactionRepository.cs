@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using System.Transactions;
 using WiseControl.Domain.Entities;
 using WiseControl.Domain.Interfaces;
+
+using WiseControl.Domain.Interfaces.Repositories;
 using WiseControl.Domain.Settings;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using Transaction = WiseControl.Domain.Entities.Transaction;

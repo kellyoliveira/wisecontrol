@@ -1,11 +1,10 @@
-﻿using WiseControl.Domain.Interfaces;
-using Account = WiseControl.Domain.Entities.Account;
+﻿using Account = WiseControl.Domain.Entities.Account;
 using MongoDB.Driver;
 using System.Collections.Generic;
 using System.Linq;
 using WiseControl.Domain.Settings;
 using Microsoft.Extensions.Options;
-
+using WiseControl.Domain.Interfaces.Repositories;
 
 namespace WiseControl.Infra.Data.Repositories
 {

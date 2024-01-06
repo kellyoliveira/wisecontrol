@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WiseControl.Domain.Interfaces;
+using WiseControl.Domain.Interfaces.Services;
 using WiseControl.DTOs;
 
 namespace WiseControl.Api.Controllers

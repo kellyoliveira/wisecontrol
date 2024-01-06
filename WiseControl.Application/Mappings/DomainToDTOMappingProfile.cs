@@ -19,6 +19,7 @@ namespace WiseControl.Application.Mappings
 
             CreateMap<Transaction, TransactionDTO>().ReverseMap();
             CreateMap<Account, AccountDTO>().ReverseMap();
+            CreateMap<User, UserDTO>().ReverseMap();
 
         }
     }

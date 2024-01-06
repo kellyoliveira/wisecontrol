@@ -5,7 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using WiseControl.Domain.Entities;
-using WiseControl.Domain.Interfaces;
+using WiseControl.Domain.Interfaces.Repositories;
+using WiseControl.Domain.Interfaces.Services;
 using WiseControl.DTOs;
 
 namespace WiseControl.Application.Services

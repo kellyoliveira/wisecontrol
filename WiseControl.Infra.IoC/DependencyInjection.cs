@@ -8,6 +8,8 @@ using System.Reflection;
 using WiseControl.Application.Mappings;
 using WiseControl.Application.Services;
 using WiseControl.Domain.Interfaces;
+using WiseControl.Domain.Interfaces.Repositories;
+using WiseControl.Domain.Interfaces.Services;
 using WiseControl.Infra.Data.Repositories;
 
 namespace WiseControl.Infra.IoC
@@ -24,9 +26,8 @@ namespace WiseControl.Infra.IoC
             services.AddScoped<ITransactionRepository, TransactionRepository>();
             services.AddScoped<ITransactionService, TransactionService>();
 
-
-            //services.AddAutoMapper(() => xAppDomain.CurrentDomain.GetAssemblies());
-
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IAuthService, AuthService>();
 
             services.AddAutoMapper(typeof(DomainToDTOMappingProfile));
 
