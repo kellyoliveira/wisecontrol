@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WiseControl.DTOs
 {
-    public class LoginDTO
+    public class UserCredentialDTO
     {
         public string Email {
             get;set;
