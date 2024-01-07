@@ -82,12 +82,18 @@ export class LoginPage  {
 
     this.authService.signin(this.userCredential).then(() => {
       
-      alert("signin");
-      this.messageService.isLoadingData = false;
-      this.success = true;
-      
+      if(this.authService.isAuthenticated) {
+        this.success = true;
+        this.router.navigate(['/home']);
 
-      this.router.navigate(['/home']);
+      }
+      else {
+        this.messageService.isLoadingData = false;
+       
+        alert("Login e Senha inválidos.")
+
+      }
+      
     })
     .catch(reason => {
       alert("error");

@@ -38,6 +38,18 @@ export class AuthService extends BaseService {
     super(messageService, router, http);
   }
 
+  public get authIdentifier(): string | null{
+    return localStorage.getItem('x-access_identifier');
+  }
+
+  private storeAuthIdentifier(value: string | null) {
+    if (!value) {
+      localStorage.removeItem('x-access_identifier');
+      return;
+    }
+    localStorage.setItem('x-access_identifier', value);
+  }
+  
   public get accessToken(): string | null{
     return localStorage.getItem('x-access_token');
   }
@@ -49,6 +61,8 @@ export class AuthService extends BaseService {
     }
     localStorage.setItem('x-access_token', value);
   }
+
+
 
   public get refreshToken(): string | null {
     return localStorage.getItem('x-refresh_token');
@@ -62,26 +76,10 @@ export class AuthService extends BaseService {
     localStorage.setItem('x-refresh_token', value);
   }
 
-  public get userName(): string | null {
-    return localStorage.getItem('x-user_name');
-  }
-
-  private setUserName(value: string | null) {
-    if (!value) {
-      localStorage.removeItem('x-user_name');
-      return;
-    }
-    localStorage.setItem('x-user_name', value);
-  }
-
-
 
   get isAuthenticated(): boolean {
     return this.signedUser !== null;
-  }
-
-  
-  
+  }  
   
   /**
    * Starts oAuth work flow to sign in an user
@@ -94,6 +92,7 @@ export class AuthService extends BaseService {
         next: (r) => {
             // if failed, tries to refresh
             if (!r.token) {
+                this.clearAuthData();
                 return;
             }
         
@@ -101,7 +100,10 @@ export class AuthService extends BaseService {
             // store tokens
             this.storeToken(r);
 
-            this.setUserInfo();
+            this._signedUser = new User();
+            this._signedUser.email = userCredential.email;
+            
+            this.signedUserChanged.emit();
 
         }
     });
@@ -126,6 +128,16 @@ export class AuthService extends BaseService {
     }
   }
 
+  private clearAuthData() {
+    this._signedUser = null;
+    this.setAccessToken(null);
+    this.setRefreshToken(null);
+    this.storeAuthIdentifier(null);
+   
+    this.signedUserChanged.emit();
+
+  }
+
   /**
    * Logout the curent user.
    */
@@ -139,12 +151,8 @@ export class AuthService extends BaseService {
         console.log(err);
       });
 
-    this._signedUser = null;
-    this.setAccessToken(null);
-    this.setRefreshToken(null);
-    this.setUserName(null);
+    this.clearAuthData();
 
-    this.signedUserChanged.emit();
     this.messageService.isLoadingData = false;
     
   }
@@ -175,7 +183,11 @@ export class AuthService extends BaseService {
   }
 
   public init() {
-   
+    if(this.authIdentifier != null) {
+      this._signedUser = new User();
+      this._signedUser.email = this.authIdentifier;
+      
+    }
   }
 
   
