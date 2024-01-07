@@ -49,13 +49,13 @@ namespace WiseControl.Api.Controllers
 
         [AllowAnonymous]
         [HttpPost("Login")]
-        public async Task<ActionResult<UserTokenDTO>> Login([FromBody] LoginDTO loginDTO)
+        public async Task<ActionResult<UserTokenDTO>> Login([FromBody] UserCredentialDTO userCredentialDTO)
         {
-            var result = await _authService.Authenticate(loginDTO);
+            var result = await _authService.Authenticate(userCredentialDTO);
 
             if (result)
             {
-                return GenerateToken(loginDTO);
+                return GenerateToken(userCredentialDTO);
                 //return Ok($"User {userInfo.Email} login successfully");
             }
             else
@@ -65,12 +65,12 @@ namespace WiseControl.Api.Controllers
             }
         }
 
-        private UserTokenDTO GenerateToken(LoginDTO loginDTO)
+        private UserTokenDTO GenerateToken(UserCredentialDTO userCredentialDTO)
         {
             //declarações do usuário
             var claims = new[]
             {
-                new Claim("email", loginDTO.Email),
+                new Claim("email", userCredentialDTO.Email),
                 new Claim("meuvalor", "oque voce quiser"),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };

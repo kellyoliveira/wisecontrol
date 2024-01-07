@@ -10,7 +10,7 @@ namespace WiseControl.Domain.Interfaces.Services
     public interface IAuthService
     {
 
-        Task<bool> Authenticate(LoginDTO loginDTO);
+        Task<bool> Authenticate(UserCredentialDTO userCredentialDTO);
         Task<UserDTO> Add(UserDTO userDTO);
         
     }

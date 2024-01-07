@@ -7,13 +7,13 @@
     </div>
     <div class="section mb-5 p-2">
 
-        <form action="index.html">
+        <form [formGroup]="loginForm">
             <div class="card">
                 <div class="card-body pb-1">
                     <div class="form-group basic">
                         <div class="input-wrapper">
-                            <label class="label" for="email1">E-mail</label>
-                            <input type="email" class="form-control" id="email1" placeholder="Seu e-mail">
+                            <label class="label" for="email">E-mail</label>
+                            <input type="email" class="form-control" id="email" formControlName="email" placeholder="Seu e-mail">
                             <i class="clear-input">
                                 <i name="close-circle"></i>
                             </i>
@@ -22,9 +22,9 @@
 
                     <div class="form-group basic">
                         <div class="input-wrapper">
-                            <label class="label" for="password1">Senha</label>
-                            <input type="password" class="form-control" id="password1" autocomplete="off"
-                                placeholder="Sua senha">
+                            <label class="label" for="password">Senha</label>
+                            <input type="password" class="form-control" id="password" autocomplete="off"
+                                placeholder="Sua senha" formControlName="password">
                             <i class="clear-input">
                                 <i name="close-circle"></i>
                             </i>
@@ -41,7 +41,7 @@
             </div>
 
             <div class="form-button-group  transparent">
-                <button type="submit" class="btn btn-primary btn-block btn-lg">Identifique-se</button>
+                <button (click)="doLogin()" class="btn btn-primary btn-block btn-lg">Identifique-se</button>
             </div>
 
         </form>

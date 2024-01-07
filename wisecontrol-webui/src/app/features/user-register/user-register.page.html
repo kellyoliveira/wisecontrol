@@ -22,13 +22,13 @@
         <h4>Informe seus dados abaixo</h4>
     </div>
     <div class="section mb-5 p-2">
-        <form action="index.html">
+        <form [formGroup]="userForm">
             <div class="card">
                 <div class="card-body">
                     <div class="form-group basic">
                         <div class="input-wrapper">
-                            <label class="label" for="email1">E-mail</label>
-                            <input type="email" class="form-control" id="email1" placeholder="Seu e-mail">
+                            <label class="label" for="email">E-mail</label>
+                            <input type="email" formControlName="email" class="form-control" id="email" placeholder="Seu e-mail">
                             <i class="clear-input">
                                 <i name="close-circle"></i>
                             </i>
@@ -37,8 +37,8 @@
 
                     <div class="form-group basic">
                         <div class="input-wrapper">
-                            <label class="label" for="password1">Senha</label>
-                            <input type="password" class="form-control" id="password1" autocomplete="off"
+                            <label class="label" for="password">Senha</label>
+                            <input type="password" formControlName="password" class="form-control" id="password" autocomplete="off"
                                 placeholder="Sua senha">
                             <i class="clear-input">
                                 <i name="close-circle"></i>
@@ -57,15 +57,7 @@
                         </div>
                     </div>
 
-                    <div class="custom-control custom-checkbox mt-2 mb-1">
-                        <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="customCheckb1">
-                            <label class="form-check-label" for="customCheckb1">
-                                Eu concordo com os <a href="#" data-bs-toggle="modal" data-bs-target="#termsModal">termos e
-                                    condições</a>
-                            </label>
-                        </div>
-                    </div>
+                    
 
                 </div>
             </div>
@@ -73,7 +65,7 @@
 
 
             <div class="form-button-group transparent">
-                <button type="submit" class="btn btn-primary btn-block btn-lg">Cadastre-se</button>
+                <button (click)="registerUser()" class="btn btn-primary btn-block btn-lg">Cadastre-se</button>
             </div>
 
         </form>

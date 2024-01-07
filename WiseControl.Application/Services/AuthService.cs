@@ -24,8 +24,8 @@ namespace WiseControl.Application.Services
 
         
 
-        public async Task<bool> Authenticate(LoginDTO loginDTO) {
-            return await _userRepository.VerifyCredentialsAsync(loginDTO.Email, loginDTO.Password);
+        public async Task<bool> Authenticate(UserCredentialDTO userCredentialDTO) {
+            return await _userRepository.VerifyCredentialsAsync(userCredentialDTO.Email, userCredentialDTO.Password);
         }
 
         public async Task<UserDTO> Add(UserDTO userDTO) {
