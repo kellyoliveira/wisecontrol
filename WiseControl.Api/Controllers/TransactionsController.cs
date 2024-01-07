@@ -1,10 +1,12 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using WiseControl.DTOs;
 using WiseControl.Application.Services;
 using WiseControl.Domain.Interfaces.Services;
 
 namespace WiseControl.Api.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class TransactionsController : ControllerBase

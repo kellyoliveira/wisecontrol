@@ -30,6 +30,8 @@ namespace WiseControl.Api.Controllers
             _configuration = configuration;
         }
 
+
+        [AllowAnonymous]
         [HttpPost("CreateUser")]
         public async Task<ActionResult> CreateUser([FromBody] UserDTO userDTO)
         {
