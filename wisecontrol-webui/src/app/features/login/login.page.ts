@@ -45,7 +45,7 @@ export class LoginPage  {
     });
   }
 
-  private validateDataAccount() : boolean {
+  private validateLogin() : boolean {
     if (!this.loginForm.valid) {
       return false;
     }
@@ -56,7 +56,7 @@ export class LoginPage  {
 
   doLogin() {
 
-    if (!this.validateDataAccount()) {
+    if (!this.validateLogin()) {
       return;
     }
   
@@ -81,13 +81,16 @@ export class LoginPage  {
     this.messageService.isLoadingData = true;
 
     this.authService.signin(this.userCredential).then(() => {
+      
+      alert("signin");
       this.messageService.isLoadingData = false;
       this.success = true;
-        
+      
 
       this.router.navigate(['/home']);
     })
     .catch(reason => {
+      alert("error");
       this.success = false;
       this.messageService.isLoadingData = false;
       console.error('OAuth rejected', reason);

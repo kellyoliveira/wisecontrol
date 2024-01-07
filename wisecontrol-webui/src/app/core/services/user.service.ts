@@ -14,6 +14,6 @@ import { catchError, map, tap } from 'rxjs/operators';
 export class UserService extends BaseService {
     
     public createUser(user: User): Observable<User> {
-        return this.http.post<User>(environment.SERVER_HOST + '/api/auth/', user, this.httpOptions);
+        return this.http.post<User>(environment.SERVER_HOST + '/api/auth/createuser', user, this.httpOptions);
     }
 }

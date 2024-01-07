@@ -84,13 +84,15 @@ export class AuthService extends BaseService {
 
 
     // starts oAuth flow
-    const response = this.http.post<UserToken>(environment.SERVER_HOST + '/api/auth/', userCredential, this.httpOptions).subscribe({
+    const response = this.http.post<UserToken>(environment.SERVER_HOST + '/api/auth/login/', userCredential, this.httpOptions).subscribe({
         next: (r) => {
             // if failed, tries to refresh
             if (!r.token) {
                 return;
             }
         
+            alert(r.token);
+
             // store tokens
             this.storeTokens(r);
 

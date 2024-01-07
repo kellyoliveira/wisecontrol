@@ -39,7 +39,10 @@ export class UserRegisterPage  {
 
   private buildForm() {
     this.userForm = new FormGroup({
-        description: new FormControl('', [Validators.required])
+        name: new FormControl('', [Validators.required]),
+        email: new FormControl('', [Validators.required]),
+        password: new FormControl('', [Validators.required]),
+
     });
   }
 
@@ -53,6 +56,9 @@ export class UserRegisterPage  {
   }
 
   registerUser() {
+    alert("registerUser");
+
+
 
     if (!this.validateDataUser()) {
       return;
@@ -71,7 +77,7 @@ export class UserRegisterPage  {
 
   saveUser() {
 
-
+    
 
     this.errorMessage = '';
     this.messageService.blockUI();
