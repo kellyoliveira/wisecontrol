@@ -101,6 +101,8 @@ export class AuthService extends BaseService {
             // store tokens
             this.storeToken(r);
 
+            this.setUserInfo();
+
         }
     });
 
@@ -153,36 +155,24 @@ export class AuthService extends BaseService {
   }
 
 
-  /*async setUserInfo() {
+  async setUserInfo() {
     
-    const response = this.http.get<User>(environment.SERVER_HOST + '/api/auth/identity/', userCredential, this.httpOptions).subscribe({
-      next: (r) => {
-          // if failed, tries to refresh
-          if (!r.token) {
-              return;
-          }
-      
- 
-          // store tokens
-          this.storeToken(r);
-
-      }
-  });
-
-    const userInfo = await this.http.get(environment.SERVER_HOST + '/api/auth/_identity/' + this.userName).toPromise<User>(user)
-      .catch(err => {
-        this._signedUser = null;
-        console.log('error getting user info');
-      });
-
-    if (userInfo) {
-      this._signedUser = new User();
-      //this._signedUser.email = userInfo.email;
-    
-    }
-    
-    this.signedUserChanged.emit();
-  }*/
+    const response = this.http.get<User>(environment.SERVER_HOST + '/api/auth/', this.httpOptionsNoCacheWithJWTAuthentication()).subscribe({
+        next: (r) => {
+            // if failed, tries to refresh
+            this._signedUser = new User();
+            this._signedUser.email = r.email;
+            this._signedUser.name = r.name;
+            
+            this.signedUserChanged.emit();
+        },
+        error: (e) => {
+          this._signedUser = null;
+          console.log('error getting user info');
+          
+        }
+    });
+  }
 
   public init() {
    

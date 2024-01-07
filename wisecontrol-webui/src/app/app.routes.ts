@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { UserGuard } from './core/guards/user.guard';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -7,42 +8,48 @@ export const routes: Routes = [
         data: {
           title: 'Home',
         },
-        loadChildren: () => import('./features/home/home.module').then(m => m.HomePageModule)
+        loadChildren: () => import('./features/home/home.module').then(m => m.HomePageModule),
+        canActivate: [UserGuard]
     },
     {
         path: 'transactions',
         data: {
           title: 'Transações',
         },
-        loadChildren: () => import('./features/transactions/transactions.module').then(m => m.TransactionsPageModule)
+        loadChildren: () => import('./features/transactions/transactions.module').then(m => m.TransactionsPageModule),
+        canActivate: [UserGuard]
     },
     {
         path: 'transaction-detail/:id',
         data: {
           title: 'Detalhes da Transação',
         },
-        loadChildren: () => import('./features/transaction-detail/transaction-detail.module').then(m => m.TransactionDetailPageModule)
+        loadChildren: () => import('./features/transaction-detail/transaction-detail.module').then(m => m.TransactionDetailPageModule),
+        canActivate: [UserGuard]
     },
     {
       path: 'accounts',
       data: {
         title: 'Contas',
       },
-      loadChildren: () => import('./features/accounts/accounts.module').then(m => m.AccountsPageModule)
+      loadChildren: () => import('./features/accounts/accounts.module').then(m => m.AccountsPageModule),
+      canActivate: [UserGuard]
     },
     {
       path: 'account-register',
       data: {
         title: 'Nova Conta',
       },
-      loadChildren: () => import('./features/account-register/account-register.module').then(m => m.AccountRegisterPageModule)
+      loadChildren: () => import('./features/account-register/account-register.module').then(m => m.AccountRegisterPageModule),
+      canActivate: [UserGuard]
     },
     {
       path: 'credit-register',
       data: {
         title: 'Nova Conta',
       },
-      loadChildren: () => import('./features/credit-register/credit-register.module').then(m => m.CreditRegisterPageModule)
+      loadChildren: () => import('./features/credit-register/credit-register.module').then(m => m.CreditRegisterPageModule),
+      canActivate: [UserGuard]
     } 
     ,
     {
@@ -50,14 +57,16 @@ export const routes: Routes = [
       data: {
         title: 'Nova Conta',
       },
-      loadChildren: () => import('./features/debit-register/debit-register.module').then(m => m.DebitRegisterPageModule)
+      loadChildren: () => import('./features/debit-register/debit-register.module').then(m => m.DebitRegisterPageModule),
+      canActivate: [UserGuard]
     },
     {
       path: 'transaction-succeed',
       data: {
         title: 'Registro de Transação',
       },
-      loadChildren: () => import('./features/transaction-succeed/transaction-succeed.module').then(m => m.TransactionSucceedPageModule)
+      loadChildren: () => import('./features/transaction-succeed/transaction-succeed.module').then(m => m.TransactionSucceedPageModule),
+      canActivate: [UserGuard]
     }, 
     {
       path: 'login',
