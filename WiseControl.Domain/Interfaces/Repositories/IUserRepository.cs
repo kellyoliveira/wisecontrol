@@ -12,5 +12,9 @@ namespace WiseControl.Domain.Interfaces.Repositories
         Task<bool> VerifyCredentialsAsync(string login, string encryptedPassword);
 
         Task<User> CreateAsync(User user);
+
+        Task<User> GetUserByEmailAsync(string email);
+
+        Task<User> GetUserByIdAsync(long id);
     }
 }

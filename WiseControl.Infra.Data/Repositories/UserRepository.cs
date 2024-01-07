@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Options;
+﻿using DnsClient;
+using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ using System.Transactions;
 using WiseControl.Domain.Entities;
 using WiseControl.Domain.Interfaces.Repositories;
 using WiseControl.Domain.Settings;
+using WiseControl.DTOs;
 
 namespace WiseControl.Infra.Data.Repositories
 {
@@ -34,6 +36,20 @@ namespace WiseControl.Infra.Data.Repositories
 
             return result.Any();
         }
+
+        public async Task<User> GetUserByEmailAsync(string email) {
+            var result = await _users.FindAsync<User>(user => user.Email == email);
+
+            return result.FirstOrDefault();
+        }
+
+        public async Task<User> GetUserByIdAsync(long id)
+        {
+            var result = await _users.FindAsync<User>(user => user.UserId == id);
+
+            return result.FirstOrDefault();
+        }
+
 
         public async Task<User> CreateAsync(User user) {
             var count = _users.CountDocuments(user => true);

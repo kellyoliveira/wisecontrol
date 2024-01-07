@@ -18,6 +18,7 @@ namespace WiseControl.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class AuthController : ControllerBase
     {
 
@@ -30,6 +31,26 @@ namespace WiseControl.Api.Controllers
             _configuration = configuration;
         }
 
+
+        [HttpGet()]
+        public async Task<ActionResult> Get()
+        {
+            if (User == null) {
+                ModelState.AddModelError(string.Empty, "Invalid User.");
+                return BadRequest(ModelState);
+            }
+
+            var userId = long.Parse(User.Claims.Where(p => p.ValueType == "userId").FirstOrDefault().Value);
+
+            var userDTO = await _authService.GetUserById(userId);
+            userDTO.Password = "";
+
+            //return GenerateToken(userInfo);
+            return Ok(userDTO);
+
+
+          
+        }
 
         [AllowAnonymous]
         [HttpPost("CreateUser")]
@@ -55,9 +76,12 @@ namespace WiseControl.Api.Controllers
         {
             var result = await _authService.Authenticate(userCredentialDTO);
 
+            var userDTO = await _authService.GetUserByEmail(userCredentialDTO.Email);
+
+
             if (result)
             {
-                return GenerateToken(userCredentialDTO);
+                return GenerateToken(userDTO);
                 //return Ok($"User {userInfo.Email} login successfully");
             }
             else
@@ -67,13 +91,17 @@ namespace WiseControl.Api.Controllers
             }
         }
 
-        private UserTokenDTO GenerateToken(UserCredentialDTO userCredentialDTO)
+        private UserTokenDTO GenerateToken(UserDTO userDTO)
         {
+
+
+            
             //declarações do usuário
             var claims = new[]
             {
-                new Claim("email", userCredentialDTO.Email),
-                new Claim("meuvalor", "oque voce quiser"),
+                new Claim("email", userDTO.Email),
+                new Claim("name", userDTO.Name),
+                new Claim("userId", userDTO.UserId.ToString()),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
 

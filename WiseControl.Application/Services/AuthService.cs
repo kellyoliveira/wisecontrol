@@ -22,12 +22,24 @@ namespace WiseControl.Application.Services
             _mapper = mapper;
         }
 
-        
 
-        public async Task<bool> Authenticate(UserCredentialDTO userCredentialDTO) {
+        public async Task<bool> Authenticate(UserCredentialDTO userCredentialDTO)
+        {
             return await _userRepository.VerifyCredentialsAsync(userCredentialDTO.Email, userCredentialDTO.Password);
         }
 
+        public async Task<UserDTO> GetUserByEmail(string email) {
+            var userEntity = await _userRepository.GetUserByEmailAsync(email);
+            return _mapper.Map<UserDTO>(userEntity);
+        }
+
+
+        public async Task<UserDTO> GetUserById(long id)
+        {
+            var userEntity = await _userRepository.GetUserByIdAsync(id);
+            return _mapper.Map<UserDTO>(userEntity);
+        }
+        
         public async Task<UserDTO> Add(UserDTO userDTO) {
             var userEntity = _mapper.Map<User>(userDTO);
             var user = await _userRepository.CreateAsync(userEntity); 

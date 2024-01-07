@@ -11,6 +11,11 @@ namespace WiseControl.Domain.Interfaces.Services
     {
 
         Task<bool> Authenticate(UserCredentialDTO userCredentialDTO);
+
+        Task<UserDTO> GetUserByEmail(string email);
+
+        Task<UserDTO> GetUserById(long id);
+
         Task<UserDTO> Add(UserDTO userDTO);
         
     }
