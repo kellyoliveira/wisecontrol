@@ -13,6 +13,12 @@ import { BaseService } from './base.service';
 })
 export class AuthService extends BaseService {
 
+  private _userToken: UserToken = new UserToken();
+
+  public get UserToken() {
+    return this._userToken;
+  }
+
   private _isSigning = false;
   public get isSigning() {
     return this._isSigning;
@@ -91,10 +97,9 @@ export class AuthService extends BaseService {
                 return;
             }
         
-            alert(r.token);
-
+   
             // store tokens
-            this.storeTokens(r);
+            this.storeToken(r);
 
         }
     });
@@ -106,7 +111,10 @@ export class AuthService extends BaseService {
    * Store response tokens locally
    * @param response the http response with tokens
    */
-  private storeTokens(userToken: UserToken) {
+  private storeToken(userToken: UserToken) {
+    
+    this._userToken = userToken;
+    
     if (userToken.token) {
       this.setAccessToken(userToken.token);
     }
@@ -145,10 +153,23 @@ export class AuthService extends BaseService {
   }
 
 
-  async setUserInfo() {
+  /*async setUserInfo() {
     
+    const response = this.http.get<User>(environment.SERVER_HOST + '/api/auth/identity/', userCredential, this.httpOptions).subscribe({
+      next: (r) => {
+          // if failed, tries to refresh
+          if (!r.token) {
+              return;
+          }
+      
+ 
+          // store tokens
+          this.storeToken(r);
 
-    /*const userInfo = await this.http.get(environment.SERVER_HOST + '/api/auth/_identity/' + this.userName).toPromise<User>(user)
+      }
+  });
+
+    const userInfo = await this.http.get(environment.SERVER_HOST + '/api/auth/_identity/' + this.userName).toPromise<User>(user)
       .catch(err => {
         this._signedUser = null;
         console.log('error getting user info');
@@ -160,15 +181,15 @@ export class AuthService extends BaseService {
     
     }
     
-    this.signedUserChanged.emit();*/
-  }
+    this.signedUserChanged.emit();
+  }*/
 
   public init() {
    
   }
 
   
-  public hasTokens() {
+  public hasToken() {
     if (localStorage.getItem("x-access_token") === null) {
       if (localStorage.getItem("x-refresh_token") === null) {
           return false;

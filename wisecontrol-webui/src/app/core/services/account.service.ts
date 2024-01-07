@@ -25,12 +25,12 @@ export class AccountService extends BaseService {
   public getAccounts() : Observable<List<Account>> {
     const url = `${environment.SERVER_HOST}/api/accounts/`;
     
-    return this.http.get<List<Account>>(url).pipe();
+    return this.http.get<List<Account>>(url, this.httpOptionsNoCacheWithJWTAuthentication()).pipe();
   }
 
   public getAccount(accountUId: string) {
     const url = `${environment.SERVER_HOST}/api/accounts/` + accountUId;
-    return this.http.get<Account>(url).pipe();
+    return this.http.get<Account>(url, this.httpOptionsNoCacheWithJWTAuthentication()).pipe();
   }
 
 
@@ -45,18 +45,18 @@ export class AccountService extends BaseService {
   public deleteAccount(account: Account) {
     let urlService : string = environment.SERVER_HOST + '/api/accounts/' + account.accountId;
     
-    return this.http.delete(urlService, this.httpOptions);
+    return this.http.delete(urlService, this.httpOptionsNoCacheWithJWTAuthentication());
   }
 
   
   public createAccount(account: Account): Observable<Account> {
     
     alert(account.description);
-    return this.http.post<Account>(environment.SERVER_HOST + '/api/accounts/', account, this.httpOptions);
+    return this.http.post<Account>(environment.SERVER_HOST + '/api/accounts/', account, this.httpOptionsNoCacheWithJWTAuthentication());
   }
 
   public updateAccount(account: Account): Observable<Account> {
-    return this.http.put<Account>(`${environment.SERVER_HOST}/api/accounts/`, account, this.httpOptions);
+    return this.http.put<Account>(`${environment.SERVER_HOST}/api/accounts/`, account, this.httpOptionsNoCacheWithJWTAuthentication());
   }
 
 }

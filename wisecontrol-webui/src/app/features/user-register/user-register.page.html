@@ -55,16 +55,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group basic">
-                        <div class="input-wrapper">
-                            <label class="label" for="password2">Confirmação de Senha</label>
-                            <input type="password" class="form-control" id="password2" autocomplete="off"
-                                placeholder="Confirme sua senha">
-                            <i class="clear-input">
-                                <i name="close-circle"></i>
-                            </i>
-                        </div>
-                    </div>
+                  
 
                     
 
@@ -74,7 +65,7 @@
 
 
             <div class="form-button-group transparent">
-                <button (click)="registerUser()" class="btn btn-primary btn-block btn-lg">Cadastre-se</button>
+                <button [ngClass]="{'disabled-button' : (userForm.invalid || messageService.isLoadingData)}" (click)="registerUser()" class="btn btn-primary btn-block btn-lg">Cadastre-se</button>
             </div>
 
         </form>

@@ -41,7 +41,7 @@
             </div>
 
             <div class="form-button-group  transparent">
-                <button (click)="doLogin()" class="btn btn-primary btn-block btn-lg">Identifique-se</button>
+                <button (click)="doLogin()" [ngClass]="{'disabled-button' : (loginForm.invalid || messageService.isLoadingData)}" class="btn btn-primary btn-block btn-lg">Identifique-se</button>
             </div>
 
         </form>

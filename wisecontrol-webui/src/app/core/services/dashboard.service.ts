@@ -17,6 +17,6 @@ export class DashboardService extends BaseService {
 
     public getDashboard() {
         const url = `${environment.SERVER_HOST}/api/dashboard/`;
-        return this.http.get<Dashboard>(url).pipe();
+        return this.http.get<Dashboard>(url, this.httpOptionsNoCacheWithJWTAuthentication()).pipe();
     }
 }

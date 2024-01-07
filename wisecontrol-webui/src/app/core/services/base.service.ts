@@ -17,6 +17,15 @@ export abstract class BaseService {
     protected readonly httpOptionsNoCache = {headers: {'Content-Type': 'application/json', 'Cache-Control': 'no-cache', 
     Pragma: 'no-cache'}};
 
+    protected httpOptionsNoCacheWithJWTAuthentication() {
+    
+      let token = localStorage.getItem("x-access_token");
+    
+      var headers = {headers: {'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json', 'Cache-Control': 'no-cache', Pragma: 'no-cache'}};
+
+      return headers;
+    }
+
 
     constructor(
       protected messageService: MessageService,

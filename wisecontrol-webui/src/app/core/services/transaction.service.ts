@@ -24,38 +24,38 @@ export class TransactionService extends BaseService {
 
   public getTransaction(transactionId: string) {
     const url = `${environment.SERVER_HOST}/api/transactions/` + transactionId;
-    return this.http.get<Transaction>(url).pipe();
+    return this.http.get<Transaction>(url, this.httpOptionsNoCacheWithJWTAuthentication()).pipe();
   }
 
   
   public getTransactions() : Observable<List<Transaction>> {
     const url = `${environment.SERVER_HOST}/api/transactions/`;
     
-    return this.http.get<List<Transaction>>(url).pipe();
+    return this.http.get<List<Transaction>>(url, this.httpOptionsNoCacheWithJWTAuthentication()).pipe();
   }
 
   public deleteTransaction(transaction: Transaction) {
     let urlService : string = environment.SERVER_HOST + '/api/transactions/' + transaction.transactionId;
     
-    return this.http.delete(urlService, this.httpOptions);
+    return this.http.delete(urlService, this.httpOptionsNoCacheWithJWTAuthentication());
   }
 
   
   public createTransactionDebit(transaction: Transaction): Observable<Transaction> {
     transaction.type = TransactionType.Debit;
 
-    return this.http.post<Transaction>(environment.SERVER_HOST + '/api/transactions/', transaction, this.httpOptions);
+    return this.http.post<Transaction>(environment.SERVER_HOST + '/api/transactions/', transaction, this.httpOptionsNoCacheWithJWTAuthentication());
   }
 
 
   public createTransactionCredit(transaction: Transaction): Observable<Transaction> {
     transaction.type = TransactionType.Credit;
     
-    return this.http.post<Transaction>(environment.SERVER_HOST + '/api/transactions/', transaction, this.httpOptions);
+    return this.http.post<Transaction>(environment.SERVER_HOST + '/api/transactions/', transaction, this.httpOptionsNoCacheWithJWTAuthentication());
   }
 
   public updateTransaction(transaction: Transaction): Observable<Transaction> {
-    return this.http.put<Transaction>(`${environment.SERVER_HOST}/api/transactions/`, transaction, this.httpOptions);
+    return this.http.put<Transaction>(`${environment.SERVER_HOST}/api/transactions/`, transaction, this.httpOptionsNoCacheWithJWTAuthentication());
   }
 
 }
