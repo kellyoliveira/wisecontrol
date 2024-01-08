@@ -4,7 +4,7 @@ O sistema também foi desenvolvido com criação e autenticação de usuários
 Todos os lançamentos também são agrupados por contas
 
 ## Tecnologias Utilizadas
-As tecnologias utilizadas no projeto foram as seguintes
+As tecnologias utilizadas no projeto foram as seguintes:
 
 .NET Framework 8
 Banco de Dados: MongoDB
