@@ -11,7 +11,6 @@
         public decimal Balance { get; set; }
 
 
-        public string Owner { get; set; }
 
     }
 }

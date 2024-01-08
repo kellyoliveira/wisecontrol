@@ -5,6 +5,5 @@ export class Account {
     public description : string = '';
 
     public balance : Number = 0;
-    public owner:string = '';
-
+   
 }

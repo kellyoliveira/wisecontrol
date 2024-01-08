@@ -26,7 +26,5 @@ namespace WiseControl.Domain.Entities
         public decimal Balance { get; set; }
 
 
-        public string Owner { get; set; }
-
     }
 }

@@ -57,10 +57,8 @@ export class AccountRegisterPage  {
     if (!this.validateDataAccount()) {
       return;
     }
-  
-    
+      
     this.account.description = this.accountForm.get('description')?.value;
-    this.account.owner = "kelly.oliveira";
 
     console.log(this.account);
 
