@@ -28,8 +28,10 @@ namespace WiseControl.Api.Controllers
         [HttpGet()]
         public async Task<ActionResult<TransactionDTO>> Get()
         {
-            
+
             var transactions = await _transactionService.GetTransactions();
+
+            var lastTransactions = transactions.OrderByDescending(p => p.TransactionId).Take(5);
 
 
             var accounts = await _accountService.GetAccounts();
@@ -42,7 +44,7 @@ namespace WiseControl.Api.Controllers
             }
 
 
-            var dashboardDTO = new DashboardDTO(transactions.ToArray(), accounts.ToArray());
+            var dashboardDTO = new DashboardDTO(lastTransactions.ToArray(), accounts.ToArray());
 
 
             return Ok(dashboardDTO);
