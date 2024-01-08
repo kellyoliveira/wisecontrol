@@ -115,7 +115,7 @@ namespace WiseControl.Api.Controllers
             var credentials = new SigningCredentials(privateKey, SecurityAlgorithms.HmacSha256);
 
             //definir o tempo de expiração
-            var expiration = DateTime.UtcNow.AddMinutes(10);
+            var expiration = DateTime.UtcNow.AddMinutes(240);
 
             //gerar o token
             JwtSecurityToken token = new JwtSecurityToken(
