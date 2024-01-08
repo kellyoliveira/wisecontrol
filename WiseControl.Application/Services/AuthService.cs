@@ -8,6 +8,8 @@ using WiseControl.Domain.Entities;
 using WiseControl.Domain.Interfaces.Repositories;
 using WiseControl.Domain.Interfaces.Services;
 using WiseControl.DTOs;
+using System.Security.Cryptography;
+
 
 namespace WiseControl.Application.Services
 {
@@ -23,9 +25,21 @@ namespace WiseControl.Application.Services
         }
 
 
+        private string EncryptPassword(string pwd)
+        {
+            SHA256 sha256 = SHA256Managed.Create();
+            UTF8Encoding objUtf8 = new UTF8Encoding();
+            byte[] hashValue = sha256.ComputeHash(objUtf8.GetBytes(pwd));
+
+            var hash = Convert.ToBase64String(hashValue);
+
+            return hash;
+        }
+
+
         public async Task<bool> Authenticate(UserCredentialDTO userCredentialDTO)
         {
-            return await _userRepository.VerifyCredentialsAsync(userCredentialDTO.Email, userCredentialDTO.Password);
+            return await _userRepository.VerifyCredentialsAsync(userCredentialDTO.Email, this.EncryptPassword(userCredentialDTO.Password));
         }
 
         public async Task<UserDTO> GetUserByEmail(string email) {
@@ -42,6 +56,9 @@ namespace WiseControl.Application.Services
         
         public async Task<UserDTO> Add(UserDTO userDTO) {
             var userEntity = _mapper.Map<User>(userDTO);
+
+            userEntity.Password = this.EncryptPassword(userEntity.Password);
+
             var user = await _userRepository.CreateAsync(userEntity); 
 
 
