@@ -15,7 +15,7 @@ Angular Versão 17
 XUnit para produção de testes unitários
 
 ## Documentações disponibilizadas
-As seguintes documentações foram disponibilizadas no diretório Wise Control
+As seguintes documentações foram disponibilizadas no diretório WiseControl.Docs
 
 1) Documentação de Visão do sistema
 2) Diagrama de arquitetura do projeto
