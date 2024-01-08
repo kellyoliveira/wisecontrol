@@ -8,6 +8,7 @@ import { MessageService } from './message.service';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
 import { List } from '../view-models/list';
+import { AuthService } from './auth.service';
 
 @Injectable({
     providedIn: 'root'
@@ -15,10 +16,11 @@ import { List } from '../view-models/list';
 export class AccountService extends BaseService {
 
   constructor(
-    protected override http: HttpClient,
     protected override messageService: MessageService,
-    protected override router: Router) {
-    super(messageService, router, http);
+    protected override authService: AuthService,
+    protected override router: Router,
+    protected override http: HttpClient) {
+    super(messageService, authService, router, http);
   }
 
 
@@ -50,8 +52,6 @@ export class AccountService extends BaseService {
 
   
   public createAccount(account: Account): Observable<Account> {
-    
-    alert(account.description);
     return this.http.post<Account>(environment.SERVER_HOST + '/api/accounts/', account, this.httpOptionsNoCacheWithJWTAuthentication());
   }
 

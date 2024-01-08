@@ -133,6 +133,7 @@ namespace WiseControl.Api.Controllers
 
             return new UserTokenDTO()
             {
+                Email = userDTO.Email,
                 Token = new JwtSecurityTokenHandler().WriteToken(token),
                 Expiration = expiration
             };

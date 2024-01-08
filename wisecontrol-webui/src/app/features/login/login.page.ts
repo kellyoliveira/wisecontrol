@@ -35,6 +35,20 @@ export class LoginPage  {
   }
 
   ngOnInit() {
+    this.authService.signedUserChanged.subscribe({next: () => {
+      if(this.authService.isAuthenticated) {
+        this.success = true;
+        this.router.navigate(['/home']);
+
+      }
+      else {
+        this.messageService.isLoadingData = false;
+       
+        alert("Login e Senha inválidos.")
+
+      }
+
+    }});
     
   }
 
@@ -80,19 +94,11 @@ export class LoginPage  {
     this.messageService.blockUI();
     this.messageService.isLoadingData = true;
 
+      
+
     this.authService.signin(this.userCredential).then(() => {
       
-      if(this.authService.isAuthenticated) {
-        this.success = true;
-        this.router.navigate(['/home']);
-
-      }
-      else {
-        this.messageService.isLoadingData = false;
-       
-        alert("Login e Senha inválidos.")
-
-      }
+      
       
     })
     .catch(reason => {

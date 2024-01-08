@@ -8,6 +8,7 @@ import { MessageService } from './message.service';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
 import { List } from '../view-models/list';
+import { AuthService } from './auth.service';
 
 
 @Injectable({
@@ -16,10 +17,11 @@ import { List } from '../view-models/list';
 export class TransactionService extends BaseService {
 
   constructor(
-    protected override http: HttpClient,
     protected override messageService: MessageService,
-    protected override router: Router) {
-    super(messageService, router, http);
+    protected override authService: AuthService,
+    protected override router: Router,
+    protected override http: HttpClient) {
+    super(messageService, authService, router, http);
   }
 
   public getTransaction(transactionId: string) {

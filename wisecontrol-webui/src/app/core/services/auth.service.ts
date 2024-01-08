@@ -11,75 +11,53 @@ import { BaseService } from './base.service';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService extends BaseService {
+export class AuthService {
 
-  private _userToken: UserToken = new UserToken();
-
-  public get UserToken() {
-    return this._userToken;
-  }
+  protected readonly httpOptions = {headers: {'Content-Type': 'application/json'}};
 
   private _isSigning = false;
   public get isSigning() {
     return this._isSigning;
   }
 
-  private _signedUser: User | null = null;
-  public get signedUser() {
-    return this._signedUser;
+  private _signedUserToken: UserToken | null = null;
+  public get signedUserToken() {
+    return this._signedUserToken;
   }
+
+  public setSignedUserToken(signedUserToken: UserToken | null) {
+    this._signedUserToken = signedUserToken;
+    this.storeSignedUserToken();
+    this.signedUserChanged.emit();
+  }
+
+  public get signedUserTokenStored(): string | null{
+    return localStorage.getItem('x-access_token');
+  }
+
+  private storeSignedUserToken() {
+    if (!this.signedUserToken) {
+      localStorage.removeItem('x-access_token');
+      return;
+    }
+    localStorage.setItem('x-access_token', JSON.stringify(this.signedUserToken));
+  }
+
+  get isAuthenticated(): boolean {
+    return this.signedUserToken !== null;
+  }  
+
 
   public signedUserChanged: EventEmitter<void> = new EventEmitter();
 
   constructor(
-    protected override http: HttpClient,
-    protected override messageService: MessageService,
-    protected override router: Router) {
-    super(messageService, router, http);
+    protected http: HttpClient,
+    protected messageService: MessageService,
+    protected router: Router) {
   }
 
-  public get authIdentifier(): string | null{
-    return localStorage.getItem('x-access_identifier');
-  }
-
-  private storeAuthIdentifier(value: string | null) {
-    if (!value) {
-      localStorage.removeItem('x-access_identifier');
-      return;
-    }
-    localStorage.setItem('x-access_identifier', value);
-  }
   
-  public get accessToken(): string | null{
-    return localStorage.getItem('x-access_token');
-  }
-
-  private setAccessToken(value: string | null) {
-    if (!value) {
-      localStorage.removeItem('x-access_token');
-      return;
-    }
-    localStorage.setItem('x-access_token', value);
-  }
-
-
-
-  public get refreshToken(): string | null {
-    return localStorage.getItem('x-refresh_token');
-  }
-
-  private setRefreshToken(value: string | null) {
-    if (!value) {
-      localStorage.removeItem('x-refresh_token');
-      return;
-    }
-    localStorage.setItem('x-refresh_token', value);
-  }
-
-
-  get isAuthenticated(): boolean {
-    return this.signedUser !== null;
-  }  
+  
   
   /**
    * Starts oAuth work flow to sign in an user
@@ -95,47 +73,29 @@ export class AuthService extends BaseService {
                 this.clearAuthData();
                 return;
             }
-        
+            
    
             // store tokens
-            this.storeToken(r);
+            this.setSignedUserToken(r);
 
-            this._signedUser = new User();
-            this._signedUser.email = userCredential.email;
             
-            this.signedUserChanged.emit();
 
-        }
+            
+
+      },
+      error: (err) => {
+          this.clearAuthData();
+      },
     });
 
     
   }
 
-  /**
-   * Store response tokens locally
-   * @param response the http response with tokens
-   */
-  private storeToken(userToken: UserToken) {
-    
-    this._userToken = userToken;
-    
-    if (userToken.token) {
-      this.setAccessToken(userToken.token);
-    }
-
-    if (userToken.expiration) {
-      this.setRefreshToken(userToken.expiration);
-    }
-  }
+  
 
   private clearAuthData() {
-    this._signedUser = null;
-    this.setAccessToken(null);
-    this.setRefreshToken(null);
-    this.storeAuthIdentifier(null);
-   
-    this.signedUserChanged.emit();
-
+    this.setSignedUserToken(null);
+  
   }
 
   /**
@@ -163,41 +123,22 @@ export class AuthService extends BaseService {
   }
 
 
-  async setUserInfo() {
-    
-    const response = this.http.get<User>(environment.SERVER_HOST + '/api/auth/', this.httpOptionsNoCacheWithJWTAuthentication()).subscribe({
-        next: (r) => {
-            // if failed, tries to refresh
-            this._signedUser = new User();
-            this._signedUser.email = r.email;
-            this._signedUser.name = r.name;
-            
-            this.signedUserChanged.emit();
-        },
-        error: (e) => {
-          this._signedUser = null;
-          console.log('error getting user info');
-          
-        }
-    });
-  }
-
+  
   public init() {
-    if(this.authIdentifier != null) {
-      this._signedUser = new User();
-      this._signedUser.email = this.authIdentifier;
-      
+
+    if(this.signedUserToken == null) {
+      if(this.signedUserTokenStored != null) {
+        this.setSignedUserToken(JSON.parse(this.signedUserTokenStored));
+
+      }
+
     }
   }
 
   
   public hasToken() {
     if (localStorage.getItem("x-access_token") === null) {
-      if (localStorage.getItem("x-refresh_token") === null) {
-          return false;
-    
-      }
-      
+      return false;
     } 
 
     return true;

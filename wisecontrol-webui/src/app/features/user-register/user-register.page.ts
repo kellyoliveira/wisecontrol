@@ -56,10 +56,7 @@ export class UserRegisterPage  {
   }
 
   registerUser() {
-    alert("registerUser");
-
-
-
+    
     if (!this.validateDataUser()) {
       return;
     }

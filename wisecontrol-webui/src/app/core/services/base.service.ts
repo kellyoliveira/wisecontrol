@@ -4,6 +4,7 @@ import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { HttpClient, HttpHeaders  } from '@angular/common/http';
 import { MessageService } from './message.service';
+import { AuthService } from './auth.service';
 
 
 @Injectable({
@@ -18,8 +19,14 @@ export abstract class BaseService {
     Pragma: 'no-cache'}};
 
     protected httpOptionsNoCacheWithJWTAuthentication() {
-    
-      let token = localStorage.getItem("x-access_token");
+      
+      let token = '';
+
+      this.authService.init();
+
+      if(this.authService.signedUserToken != null) {
+        token = this.authService.signedUserToken?.token;
+      }
     
       var headers = {headers: {'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json', 'Cache-Control': 'no-cache', Pragma: 'no-cache'}};
 
@@ -29,6 +36,7 @@ export abstract class BaseService {
 
     constructor(
       protected messageService: MessageService,
+      protected authService: AuthService,
       protected router: Router,
       protected http: HttpClient) {
     }
