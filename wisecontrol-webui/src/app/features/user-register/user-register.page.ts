@@ -85,7 +85,7 @@ export class UserRegisterPage  {
         this.messageService.isLoadingData = false;
         this.success = true;
         
-        this.router.navigate(['/home']);
+        this.router.navigate(['/login']);
 
       },
       error:(err) => {

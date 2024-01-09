@@ -61,7 +61,7 @@ namespace WiseControl.Api.Controllers
             if (result != null)
             {
                 //return GenerateToken(userInfo);
-                return Ok($"User {userDTO.Email} was created successfully");
+                return Ok(result);
             }
             else
             {

@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 import { UserGuard } from './core/guards/user.guard';
 
 export const routes: Routes = [
-    { path: '', redirectTo: '/home', pathMatch: 'full' },
+    { path: '', redirectTo: '/login', pathMatch: 'full' },
     {
         path: 'home',
         data: {
