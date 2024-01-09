@@ -56,6 +56,14 @@ namespace WiseControl.Api.Controllers
         [HttpPost("CreateUser")]
         public async Task<ActionResult> CreateUser([FromBody] UserDTO userDTO)
         {
+
+            var oldUser = await _authService.GetUserByEmail(userDTO.Email);
+
+            if(oldUser != null) {
+                ModelState.AddModelError("message", "E-mail já registrado.");
+                return BadRequest(ModelState);
+            }
+            
             var result = await _authService.Add(userDTO);
 
             if (result != null)
@@ -65,7 +73,7 @@ namespace WiseControl.Api.Controllers
             }
             else
             {
-                ModelState.AddModelError(string.Empty, "Invalid Login attempt.");
+                ModelState.AddModelError("message", "Dados de usuário inválidos.");
                 return BadRequest(ModelState);
             }
         }

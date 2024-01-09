@@ -89,8 +89,7 @@ export class UserRegisterPage  {
 
       },
       error:(err) => {
-        alert(JSON.stringify(err));
-
+        
         this.messageService.isLoadingData = false;
         this.success = false;
 
