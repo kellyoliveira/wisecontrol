@@ -59,9 +59,9 @@ namespace WiseControl.Application.Tests
 
             ITransactionService transactionService = new TransactionService(mockTransactionRepo.Object, mapper);
 
-            AccountDTO accountDTO = new AccountDTO() { Description = "Account" };
+            TransactionDTO transactionDTO = new TransactionDTO() { Description = "Account" };
 
-            await accountService.Add(accountDTO);
+            await transactionService.Add(transactionDTO);
 
 
         }
