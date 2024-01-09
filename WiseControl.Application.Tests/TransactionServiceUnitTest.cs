@@ -1,32 +1,69 @@
+using AutoMapper;
+using Moq;
+using System.Transactions;
+using WiseControl.Application.Mappings;
+using WiseControl.Application.Services;
+using WiseControl.Domain.Entities;
+using WiseControl.Domain.Interfaces.Repositories;
+using WiseControl.Domain.Interfaces.Services;
+using WiseControl.DTOs;
+using Transaction = WiseControl.Domain.Entities.Transaction;
+
 namespace WiseControl.Application.Tests
 {
     public class TransactionUnitTest
     {
+        Mock<ITransactionRepository> mockTransactionRepo = new Mock<ITransactionRepository>();
+
+
         [Fact]
-        public void VerifyBalanceAccountAfterDebitTransactionTest()
+        public async void VerifyTransactionList()
         {
-            //Arrange
-            //var num = 6;
-            //Act
-            //bool result = Mathematics.IsEvenNumber(num);
-            //Assert
 
-            bool result = true;
+            var  transactions = new List<Transaction>(){
+                new Transaction() { TransactionId=1, Description = "Transaction 1" },
+                new Transaction() { TransactionId=2, Description = "Transaction 2" },
+                new Transaction() { TransactionId=3, Description = "Transaction 3" }
+            }.AsEnumerable();
 
-            Assert.True(result);
+
+            mockTransactionRepo.Setup(x => x.GetTransactionsAsync()).Returns(Task.FromResult(transactions));
+
+            var mockMapper = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile(new DomainToDTOMappingProfile());
+            });
+            var mapper = mockMapper.CreateMapper();
+
+
+            ITransactionService transactionService = new TransactionService(mockTransactionRepo.Object, mapper);
+
+            var list = await transactionService.GetTransactions();
+
+            Assert.True(list.Count() == transactions.Count());
         }
 
 
         [Fact]
-        public void VerifyBalanceAccountAfterCreditTransactionTest()
+        public async void VerifyTransactionRegistrationn()
         {
-            //Act
-            //bool result = Mathematics.IsOddNumber(num);
-            //Assert
-            bool result = true;
-            
-            
-            Assert.True(result);
+            //Arrange
+            mockTransactionRepo.Setup(x => x.CreateAsync(It.IsAny<Transaction>())).Returns(Task.FromResult(new Transaction() { }));
+
+            var mockMapper = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile(new DomainToDTOMappingProfile());
+            });
+            var mapper = mockMapper.CreateMapper();
+
+
+            ITransactionService transactionService = new TransactionService(mockTransactionRepo.Object, mapper);
+
+            AccountDTO accountDTO = new AccountDTO() { Description = "Account" };
+
+            await accountService.Add(accountDTO);
+
+
         }
 
     }
