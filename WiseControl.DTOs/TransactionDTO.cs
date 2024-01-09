@@ -1,4 +1,7 @@
-﻿namespace WiseControl.DTOs
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel;
+
+namespace WiseControl.DTOs
 {
     public class TransactionDTO
     {
@@ -24,6 +27,10 @@
             } 
         }
 
+
+        [Required(ErrorMessage = "O campo descrição é obrigatório")]
+        [MaxLength(100)]
+        [DisplayName("Descrição")]
         public String Description { get; set; }
         
         
