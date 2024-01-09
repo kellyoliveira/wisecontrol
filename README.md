@@ -26,3 +26,12 @@ Os htmls foram construídos com base no theme FinApp, para oferecer uma melhor e
 ## Autor
 Para entrar em contato com a desenvolvedora Kelly Sousa, responsável pelo desenvolvimento do código, segue link do linkedIn: https://www.linkedin.com/in/kelly-oliveira-sousa/
 
+## Passos para execução da Solução
+
+1) Rodar o arquivo WiseControl.sln utilizando o Visual Studio 2022. É necessária a instalação do .NET Framework 8.
+
+2) É necessário fornecer o IP para acesso ao banco de dados MongoLab
+
+3) O projeto wisecontrol-webui foi feito em Angular 17 e desenvolvido utilizando a plataforma Visual Studio Code
+
+4) Após o módulo de BackEnd rodar no Visual Studio configurar na pasta environments do Angular o parametro SERVER_HOST, apontando ao backend correto.  
